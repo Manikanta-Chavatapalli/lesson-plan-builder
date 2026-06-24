@@ -135,7 +135,11 @@ export const AppProvider = ({ children }) => {
       const customToken = response.data.token;
       
       // Use the custom token to sign in to Firebase
-      await signInWithCustomToken(auth, customToken);
+      const userCredential = await signInWithCustomToken(auth, customToken);
+      
+      // Explicitly get and store the JWT to ensure it is immediately available for the next request
+      const idToken = await userCredential.user.getIdToken();
+      localStorage.setItem('intellitots_token', idToken);
       
       return response;
     } catch (error) {

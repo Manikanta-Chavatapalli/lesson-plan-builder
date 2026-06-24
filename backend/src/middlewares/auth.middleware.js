@@ -28,8 +28,10 @@ export const authenticate = async (req, _res, next) => {
     next();
   } catch (error) {
     if (error.code?.startsWith('auth/')) {
+        console.error('Firebase Auth Error:', error);
         next(new AppError('Invalid or expired token', HTTP_STATUS.UNAUTHORIZED, 'INVALID_TOKEN'));
     } else {
+        console.error('Auth Middleware Error:', error);
         next(error);
     }
   }

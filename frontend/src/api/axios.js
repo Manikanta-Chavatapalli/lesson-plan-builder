@@ -23,6 +23,9 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    const errorMessage = error.response?.data?.message || error.message || 'API request failed';
+    console.error(`[API Error] ${error.config?.method?.toUpperCase()} ${error.config?.url} - ${error.response?.status}: ${errorMessage}`, error.response?.data);
+
     if (
       error?.response?.status === 401 &&
       !error.config?.url?.includes('/auth/login') &&
@@ -35,6 +38,9 @@ apiClient.interceptors.response.use(
         window.location.href = '/';
       }
     }
+    
+    // Attach extracted message to error object for easier frontend consumption
+    error.extractedMessage = errorMessage;
     return Promise.reject(error);
   }
 );

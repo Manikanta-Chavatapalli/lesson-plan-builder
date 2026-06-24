@@ -24,7 +24,18 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({
-  origin: env.corsOrigin,
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'https://lesson-plan-builder-gamma.vercel.app',
+      env.corsOrigin
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());
@@ -50,15 +61,11 @@ app.use('/api/counsellor', counsellorRoutes);
 app.use('/api/stream', streamRoutes);
 
 app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Lesson Plan Builder API is running 🚀',
-    endpoints: {
-      health: '/api',
-      auth: '/api/auth',
-      lessonPlans: '/api/lesson-plans',
-    }
-  });
+  res.send('Lesson Plan Builder API is running 🚀');
+});
+
+app.get('/api', (req, res) => {
+  res.send('Lesson Plan Builder API is running 🚀');
 });
 
 app.use(notFoundHandler);

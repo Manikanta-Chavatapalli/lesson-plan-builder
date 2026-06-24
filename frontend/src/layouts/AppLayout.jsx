@@ -95,7 +95,7 @@ const AppLayout = () => {
     let eventSource;
     if (user) {
       const token = localStorage.getItem('token');
-      eventSource = new EventSource(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/stream?token=${token}`);
+      eventSource = new EventSource(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}/api/stream?token=${token}`);
       eventSource.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
