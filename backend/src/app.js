@@ -49,6 +49,18 @@ app.use('/api/activity', authenticate, activityLogRoutes);
 app.use('/api/counsellor', counsellorRoutes);
 app.use('/api/stream', streamRoutes);
 
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Lesson Plan Builder API is running 🚀',
+    endpoints: {
+      health: '/api',
+      auth: '/api/auth',
+      lessonPlans: '/api/lesson-plans',
+    }
+  });
+});
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 
