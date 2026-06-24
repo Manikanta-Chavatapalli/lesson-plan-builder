@@ -130,6 +130,13 @@ const verifyOtpValidation = [
   body('otp').isLength({ min: 6, max: 6 }).withMessage('OTP must be 6 digits'),
 ];
 
+router.get('/', (req, res) => {
+  res.json({
+    message: 'Auth API working',
+    routes: ['/request-otp', '/verify-otp', '/me', '/logout']
+  });
+});
+
 router.post('/request-otp', requestOtpValidation, validate, requestOtpController);
 router.post('/verify-otp', verifyOtpValidation, validate, verifyOtpController);
 router.get('/me', authenticate, meController);

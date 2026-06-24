@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken, removeToken } from '../utils/storage.js';
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // ❗ REMOVE fallback
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`, // ❗ Added /api here to fix 404s
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
