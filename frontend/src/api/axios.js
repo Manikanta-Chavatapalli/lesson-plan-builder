@@ -1,9 +1,15 @@
 import axios from 'axios';
 import { getToken, removeToken } from '../utils/storage.js';
 
+const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+
+if (!API_URL) {
+  console.warn("⚠️ Warning: Neither VITE_API_URL nor VITE_API_BASE_URL is defined in the environment.");
+}
+
 const apiClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`, // ❗ Added /api here to fix 404s
-  timeout: 30000,
+  baseURL: API_URL ? `${API_URL}/api` : '/api', // Fallback to relative path if completely undefined
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
   },

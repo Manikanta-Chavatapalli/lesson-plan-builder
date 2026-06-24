@@ -31,7 +31,8 @@ const AlertsPage = () => {
     loadAlerts();
     
     // Listen for Server-Sent Events to update instantly instead of polling every 10 seconds
-    const eventSource = new EventSource(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}/api/stream`);
+    const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    const eventSource = new EventSource(`${API_URL}/api/stream`);
     eventSource.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);

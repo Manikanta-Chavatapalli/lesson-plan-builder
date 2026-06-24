@@ -64,14 +64,12 @@ export const AppProvider = ({ children }) => {
   // Firebase Auth State Observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      console.log("Firebase Auth State Changed. User:", firebaseUser?.email);
+      console.log("Firebase Auth State Evaluated. User exists:", !!firebaseUser);
       if (firebaseUser) {
         try {
           const token = await firebaseUser.getIdToken();
-          console.log("Firebase ID Token acquired.");
           localStorage.setItem('intellitots_token', token);
           
-          console.log("Calling checkUser API for:", firebaseUser.email);
           const emailForSignIn = firebaseUser.email || window.localStorage.getItem('emailForSignIn');
           
           if (!emailForSignIn) {
@@ -82,10 +80,8 @@ export const AppProvider = ({ children }) => {
           }
 
           const response = await authApi.checkUser({ email: emailForSignIn });
-          console.log("checkUser response:", response);
           
-          if (response.data.exists) {
-             console.log("User exists in DB. Setting user state.");
+          if (response.data?.exists) {
              dispatch({ 
                type: 'SET_USER', 
                payload: { 
@@ -95,7 +91,7 @@ export const AppProvider = ({ children }) => {
                } 
              });
           } else {
-             console.log("User does not exist in DB. Signing out.");
+             console.warn("User authenticated in Firebase but does not exist in DB.");
              await signOut(auth);
              dispatch({ type: 'LOGOUT' });
           }
@@ -105,9 +101,9 @@ export const AppProvider = ({ children }) => {
           dispatch({ type: 'LOGOUT' });
         }
       } else {
-        console.log("No Firebase user. Logging out state.");
+        // Initial load or user logged out; clear token and set unauthenticated state
         localStorage.removeItem('intellitots_token');
-        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: 'LOGOUT' }); // Sets isAuthLoading to false
       }
     });
 
