@@ -6,10 +6,14 @@ import logger from './utils/logger.js';
 
 const startServer = () => {
   try {
+    // Initialize Firebase
     firebaseClient.init();
 
-    app.listen(env.port, () => {
-      logger.info(`Server running on port ${env.port}`, {
+    // ✅ IMPORTANT: Use Render PORT or fallback
+    const PORT = process.env.PORT || env.port || 5000;
+
+    app.listen(PORT, () => {
+      logger.info(`Server running on port ${PORT}`, {
         environment: env.nodeEnv,
         firebaseReady: firebaseClient.isReady(),
       });
