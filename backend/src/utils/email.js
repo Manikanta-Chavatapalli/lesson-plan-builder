@@ -32,7 +32,7 @@ class EmailService {
 
     try {
       const data = await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "noreply@lessonplanbuilder.online",
         to: parentEmail,
         subject: `Response to your Enquiry - FirstCry Intellitots`,
         html: htmlContent
@@ -72,7 +72,7 @@ class EmailService {
     try {
       console.log('Sending rejection email to:', parentEmail);
       const data = await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "noreply@lessonplanbuilder.online",
         to: parentEmail,
         subject: `Update regarding your Enquiry - FirstCry Intellitots`,
         html: htmlContent
