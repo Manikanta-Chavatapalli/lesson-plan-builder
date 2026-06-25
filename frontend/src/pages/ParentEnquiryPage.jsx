@@ -146,36 +146,19 @@ const ParentEnquiryPage = () => {
               <FormField
                 label="Class / Grade"
                 name="studentClass"
-                type="select"
+                type="text"
                 value={form.studentClass}
                 onChange={handleChange}
+                placeholder="Student Class"
                 required
-                options={[
-                  { value: '', label: '-- Select Class --' },
-                  { value: 'Pre-Nursery', label: 'Pre-Nursery' },
-                  { value: 'Nursery', label: 'Nursery' },
-                  { value: 'LKG', label: 'LKG' },
-                  { value: 'UKG', label: 'UKG' },
-                  { value: 'Class 1', label: 'Class 1' },
-                  { value: 'Class 2', label: 'Class 2' },
-                  { value: 'Class 3', label: 'Class 3' },
-                  { value: 'Class 4', label: 'Class 4' },
-                  { value: 'Class 5', label: 'Class 5' }
-                ]}
               />
               <FormField
                 label="Section (Optional)"
                 name="studentSection"
-                type="select"
+                type="text"
                 value={form.studentSection}
                 onChange={handleChange}
-                options={[
-                  { value: '', label: '-- Select Section --' },
-                  { value: 'A', label: 'Section A' },
-                  { value: 'B', label: 'Section B' },
-                  { value: 'C', label: 'Section C' },
-                  { value: 'D', label: 'Section D' }
-                ]}
+                placeholder="Student Section"
               />
             </div>
           </div>
