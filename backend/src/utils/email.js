@@ -1,27 +1,17 @@
-import nodemailer from 'nodemailer';
+import { Resend } from "resend";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 class EmailService {
   async sendEnquiryResponse(parentEmail, parentName, originalMessage, teacherResponse) {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error('Email credentials not found in environment variables.');
+    if (!process.env.RESEND_API_KEY) {
+      console.error('Resend API Key not found in environment variables.');
       throw new Error('Email configuration is missing');
     }
 
-    const mailOptions = {
-      from: `"FirstCry Intellitots" <${process.env.EMAIL_USER}>`,
-      to: parentEmail,
-      subject: `Response to your Enquiry - FirstCry Intellitots`,
-      html: `
+    const htmlContent = `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
           <h2 style="color: #4f46e5;">FirstCry Intellitots</h2>
           <p>Dear ${parentName},</p>
@@ -38,29 +28,29 @@ class EmailService {
 
           <p>Best regards,<br>FirstCry Intellitots Team</p>
         </div>
-      `,
-    };
+      `;
 
     try {
-      const info = await transporter.sendMail(mailOptions);
-      console.log('Email sent successfully: %s', info.messageId);
-      return info;
+      const data = await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: parentEmail,
+        subject: `Response to your Enquiry - FirstCry Intellitots`,
+        html: htmlContent
+      });
+      console.log('Email sent successfully:', data);
+      return data;
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error sending email:', error.message);
       throw error;
     }
   }
 
   async sendRejectionEmail(parentEmail, parentName, originalMessage, rejectionReason) {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.RESEND_API_KEY) {
       throw new Error('Email configuration is missing');
     }
 
-    const mailOptions = {
-      from: `"FirstCry Intellitots" <${process.env.EMAIL_USER}>`,
-      to: parentEmail,
-      subject: `Update regarding your Enquiry - FirstCry Intellitots`,
-      html: `
+    const htmlContent = `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
           <h2 style="color: #e11d48;">FirstCry Intellitots</h2>
           <p>Dear ${parentName},</p>
@@ -77,19 +67,24 @@ class EmailService {
 
           <p>Best regards,<br>FirstCry Intellitots Team</p>
         </div>
-      `,
-    };
+      `;
 
     try {
       console.log('Sending rejection email to:', parentEmail);
-      const info = await transporter.sendMail(mailOptions);
-      console.log('Rejection email sent:', info.messageId);
-      return info;
+      const data = await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: parentEmail,
+        subject: `Update regarding your Enquiry - FirstCry Intellitots`,
+        html: htmlContent
+      });
+      console.log('Rejection email sent:', data);
+      return data;
     } catch (error) {
-      console.error('Failed to send rejection email:', error);
+      console.error('Failed to send rejection email:', error.message);
       throw error;
     }
   }
 }
 
 export default new EmailService();
+

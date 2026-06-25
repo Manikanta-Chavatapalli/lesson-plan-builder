@@ -1,35 +1,37 @@
-import nodemailer from 'nodemailer';
-import env from '../config/env.js'; // Assuming we'll add it, or we can just use process.env directly
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const sendEmail = async (to, subject, text) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || process.env.EMAIL_PASS === 'YOUR_APP_PASSWORD') {
-    console.warn('⚠️ EMAIL_USER or EMAIL_PASS not properly configured in .env. Email may fail.');
-  }
-
+export async function sendOtpEmail(to, otp) {
   try {
-    const info = await transporter.sendMail({
-      from: `"Lesson Plan System" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      text,
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: to,
+      subject: "OTP Code",
+      html: "<h3>Your OTP is: " + otp + "</h3>"
     });
-    console.log(`Email sent to ${to}: ${info.messageId}`);
+    console.log("email sent");
+    return true;
+  } catch (err) {
+    console.log("email failed");
+    console.log(err.message);
+    return false;
+  }
+}
+
+// Fallback for other existing routes so backend doesn't break
+export const sendEmail = async (to, subject, text) => {
+  try {
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: to,
+      subject: subject,
+      html: `<p>${text.replace(/\n/g, '<br>')}</p>`
+    });
+    console.log("email sent");
     return true;
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email:', error.message);
     return false;
   }
 };

@@ -1,7 +1,7 @@
 import { getFirebaseApp } from '../config/firebase.js';
 import { AppError } from '../errors/AppError.js';
 import { HTTP_STATUS } from '../constants/index.js';
-import { sendEmail } from '../utils/mailer.js';
+import { sendEmail, sendOtpEmail } from '../utils/mailer.js';
 import { userService } from './user.routes.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { successResponse } from '../utils/response.js';
@@ -32,9 +32,7 @@ class AuthService {
 
     otpStore.set(user.email, { otp, expiresAt, attempts: 0 });
 
-    const subject = 'Your Login OTP';
-    const text = `Your OTP for Lesson Plan Builder is ${otp}. It is valid for 3 minutes. Do not share this code.`;
-    const emailSent = await sendEmail(user.email, subject, text);
+    const emailSent = await sendOtpEmail(user.email, otp);
     
     if (!emailSent) {
       console.log(`\n========================================`);
