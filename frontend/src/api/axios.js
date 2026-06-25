@@ -44,7 +44,7 @@ apiClient.interceptors.response.use(
         window.location.href = '/';
       }
     }
-    
+
     // Attach extracted message to error object for easier frontend consumption
     error.extractedMessage = errorMessage;
     return Promise.reject(error);
