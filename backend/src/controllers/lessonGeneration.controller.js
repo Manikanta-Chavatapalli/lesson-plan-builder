@@ -54,75 +54,75 @@ const TOPIC_CATEGORIES = [
   {
     key: 'science',
     keywords: ['solar system', 'planet', 'space', 'gravity', 'atom', 'molecule', 'cell', 'biology',
-               'chemistry', 'physics', 'light', 'sound', 'electricity', 'magnet', 'force', 'energy',
-               'volcano', 'earthquake', 'weather', 'climate', 'ecosystem', 'photosynthesis', 'evolution'],
+      'chemistry', 'physics', 'light', 'sound', 'electricity', 'magnet', 'force', 'energy',
+      'volcano', 'earthquake', 'weather', 'climate', 'ecosystem', 'photosynthesis', 'evolution'],
     materials: ['Science notebook', 'Diagram cards', 'Magnifying glass', 'Experiment materials', 'Observation sheet', 'Pencils & colored pens'],
     verbs: ['observe', 'hypothesize', 'experiment', 'analyze', 'record', 'compare'],
   },
   {
     key: 'nature',
     keywords: ['plant', 'tree', 'flower', 'leaf', 'garden', 'insect', 'bird', 'nature', 'seed',
-               'water cycle', 'rain', 'cloud', 'soil', 'forest', 'jungle', 'ocean', 'river', 'animal'],
+      'water cycle', 'rain', 'cloud', 'soil', 'forest', 'jungle', 'ocean', 'river', 'animal'],
     materials: ['Nature tray', 'Magnifying glasses', 'Crayons', 'Observation journal', 'Leaves & seeds', 'Drawing sheets'],
     verbs: ['observe', 'sort', 'identify', 'compare', 'describe', 'draw'],
   },
   {
     key: 'math',
     keywords: ['number', 'count', 'addition', 'subtraction', 'multiplication', 'division', 'fraction',
-               'geometry', 'shape', 'pattern', 'algebra', 'measurement', 'graph', 'data', 'probability',
-               'equation', 'math', 'maths'],
+      'geometry', 'shape', 'pattern', 'algebra', 'measurement', 'graph', 'data', 'probability',
+      'equation', 'math', 'maths'],
     materials: ['Number flashcards', 'Counting blocks', 'Worksheets', 'Ruler & protractor', 'Graph paper', 'Dice & counters'],
     verbs: ['solve', 'calculate', 'compare', 'measure', 'estimate', 'verify'],
   },
   {
     key: 'language',
     keywords: ['alphabet', 'letter', 'word', 'sentence', 'story', 'poem', 'reading', 'writing',
-               'grammar', 'vocabulary', 'phonics', 'comprehension', 'language', 'communication',
-               'speech', 'essay', 'paragraph', 'punctuation'],
+      'grammar', 'vocabulary', 'phonics', 'comprehension', 'language', 'communication',
+      'speech', 'essay', 'paragraph', 'punctuation'],
     materials: ['Storybook', 'Alphabet cards', 'Writing journals', 'Word wall cards', 'Whiteboard & markers', 'Activity worksheets'],
     verbs: ['read', 'write', 'discuss', 'retell', 'identify', 'compose'],
   },
   {
     key: 'social',
     keywords: ['friendship', 'family', 'community', 'sharing', 'kindness', 'emotion', 'feeling',
-               'empathy', 'cooperation', 'respect', 'manners', 'teamwork', 'culture', 'society',
-               'citizenship', 'responsibility'],
+      'empathy', 'cooperation', 'respect', 'manners', 'teamwork', 'culture', 'society',
+      'citizenship', 'responsibility'],
     materials: ['Emotion cards', 'Role-play props', 'Story cards', 'Chart paper', 'Markers', 'Activity sheets'],
     verbs: ['discuss', 'role-play', 'reflect', 'share', 'identify', 'demonstrate'],
   },
   {
     key: 'history',
     keywords: ['history', 'historical', 'ancient', 'civilization', 'war', 'king', 'queen', 'emperor',
-               'timeline', 'independence', 'revolution', 'colony', 'culture', 'heritage', 'monument',
-               'freedom fighter', 'ruler', 'dynasty'],
+      'timeline', 'independence', 'revolution', 'colony', 'culture', 'heritage', 'monument',
+      'freedom fighter', 'ruler', 'dynasty'],
     materials: ['Timeline chart', 'Historical images', 'Map', 'Fact cards', 'Notebook', 'Colored pencils'],
     verbs: ['examine', 'analyze', 'discuss', 'compare', 'research', 'present'],
   },
   {
     key: 'geography',
     keywords: ['map', 'continent', 'country', 'capital', 'mountain', 'river', 'desert', 'geography',
-               'latitude', 'longitude', 'compass', 'landform', 'region', 'population', 'climate zone'],
+      'latitude', 'longitude', 'compass', 'landform', 'region', 'population', 'climate zone'],
     materials: ['World map / atlas', 'Globe', 'Compass', 'Printed maps', 'Colored pencils', 'Fact sheets'],
     verbs: ['locate', 'label', 'compare', 'describe', 'identify', 'trace'],
   },
   {
     key: 'art',
     keywords: ['color', 'colour', 'painting', 'drawing', 'craft', 'art', 'sculpture', 'collage',
-               'design', 'creative', 'pattern', 'texture', 'sketch'],
+      'design', 'creative', 'pattern', 'texture', 'sketch'],
     materials: ['Paint sets', 'Brushes', 'Drawing paper', 'Crayons & markers', 'Craft supplies', 'Glue & scissors'],
     verbs: ['create', 'design', 'explore', 'experiment', 'express', 'reflect'],
   },
   {
     key: 'health',
     keywords: ['health', 'hygiene', 'nutrition', 'food', 'exercise', 'fitness', 'body', 'organ',
-               'teeth', 'germs', 'clean', 'healthy', 'diet', 'vitamin', 'muscle', 'bone'],
+      'teeth', 'germs', 'clean', 'healthy', 'diet', 'vitamin', 'muscle', 'bone'],
     materials: ['Body diagram', 'Food group chart', 'Activity sheet', 'Mirror', 'Hygiene props', 'Colored pencils'],
     verbs: ['identify', 'sort', 'demonstrate', 'practice', 'discuss', 'compare'],
   },
   {
     key: 'technology',
     keywords: ['computer', 'coding', 'programming', 'internet', 'technology', 'robot', 'digital',
-               'algorithm', 'app', 'device', 'software', 'hardware', 'data', 'AI', 'network'],
+      'algorithm', 'app', 'device', 'software', 'hardware', 'data', 'AI', 'network'],
     materials: ['Computers / tablets', 'Printed flowcharts', 'Coding cards', 'Whiteboard', 'Markers', 'Activity sheets'],
     verbs: ['code', 'debug', 'design', 'analyze', 'build', 'test'],
   },
@@ -151,9 +151,9 @@ const PHASE_TEMPLATES = {
       buildDescription: (topic, outcome) => {
         const keyword = extractKeywords(outcome);
         return `Set up a themed exploration station with props, textures, or pictures related to ${topic}. ` +
-        `Children rotate through the station in small groups (3–4 children). ` +
-        `Encourage them to touch, sort, or match items while the teacher narrates key vocabulary. ` +
-        `Target outcome: focus on ${keyword}.`;
+          `Children rotate through the station in small groups (3–4 children). ` +
+          `Encourage them to touch, sort, or match items while the teacher narrates key vocabulary. ` +
+          `Target outcome: focus on ${keyword}.`;
       },
     },
     {
@@ -195,6 +195,8 @@ const PHASE_TEMPLATES = {
         `Groups share their work with another pair ("gallery walk" format). ` +
         `Targeted skill: ${outcome}.`,
     },
+
+
     {
       type: 'Reflection & Sharing',
       buildName: (topic) => `Reflect & Share: ${topic} Takeaways`,
@@ -205,6 +207,8 @@ const PHASE_TEMPLATES = {
         `Review exit tickets to plan next session.`,
     },
   ],
+
+
   advanced: [
     {
       type: 'Hook & Prior Knowledge',
@@ -532,147 +536,237 @@ const getTopicFacts = (topic) => {
 };
 
 const DAILY_THEMES = [
-  { dayName: 'Monday',    focus: 'Introduction',         verb: 'introduce',    approach: 'Activate prior knowledge and introduce key vocabulary.' },
-  { dayName: 'Tuesday',   focus: 'Concept Building',     verb: 'explain',      approach: 'Develop core concepts through explanation and visual aids.' },
-  { dayName: 'Wednesday', focus: 'Guided Activity',      verb: 'explore',      approach: 'Apply concepts through structured, teacher-guided hands-on tasks.' },
-  { dayName: 'Thursday',  focus: 'Practice & Application', verb: 'practise',  approach: 'Consolidate learning through independent or group practice.' },
-  { dayName: 'Friday',    focus: 'Assessment & Recap',   verb: 'assess',       approach: 'Review the week, celebrate learning, and check understanding.' },
+  { dayName: 'Monday', focus: 'Introduction', verb: 'introduce', approach: 'Activate prior knowledge and introduce key vocabulary.' },
+  { dayName: 'Tuesday', focus: 'Concept Building', verb: 'explain', approach: 'Develop core concepts through explanation and visual aids.' },
+  { dayName: 'Wednesday', focus: 'Guided Activity', verb: 'explore', approach: 'Apply concepts through structured, teacher-guided hands-on tasks.' },
+  { dayName: 'Thursday', focus: 'Practice & Application', verb: 'practise', approach: 'Consolidate learning through independent or group practice.' },
+  { dayName: 'Friday', focus: 'Assessment & Recap', verb: 'assess', approach: 'Review the week, celebrate learning, and check understanding.' },
 ];
 
 const ACTIVITY_POOLS = {
 
   monday: {
     simple: [
-      { name: 'Picture Walk', type: 'Visual Exploration',
-        desc: (t) => `Teacher displays 5–6 large pictures related to ${t}. Children point and name what they see, sharing one word each. Vocabulary introduced: key nouns linked to ${t}.` },
-      { name: 'Story Introduction', type: 'Story Circle',
-        desc: (t) => `Read aloud a short picture book or show illustrated cards about ${t}. Pause twice to ask: "What do you see?" and "Does this remind you of something?"` },
-      { name: 'Curiosity Box', type: 'Sensory Play',
-        desc: (t) => `Place 3–4 objects related to ${t} in a box. Children take turns reaching in, feeling one object, and guessing what it might be before looking.` },
+      {
+        name: 'Picture Walk', type: 'Visual Exploration',
+        desc: (t) => `Teacher displays 5–6 large pictures related to ${t}. Children point and name what they see, sharing one word each. Vocabulary introduced: key nouns linked to ${t}.`
+      },
+      {
+        name: 'Story Introduction', type: 'Story Circle',
+        desc: (t) => `Read aloud a short picture book or show illustrated cards about ${t}. Pause twice to ask: "What do you see?" and "Does this remind you of something?"`
+      },
+      {
+        name: 'Curiosity Box', type: 'Sensory Play',
+        desc: (t) => `Place 3–4 objects related to ${t} in a box. Children take turns reaching in, feeling one object, and guessing what it might be before looking.`
+      },
     ],
     moderate: [
-      { name: 'Think-Pair-Share', type: 'Discussion',
-        desc: (t) => `Children write or whisper to a partner: one thing they know about ${t}. Share responses as a class. Teacher records ideas in a mind-map on the board.` },
-      { name: 'Vocabulary Preview', type: 'Guided Discovery',
-        desc: (t) => `Introduce 4–5 key words for ${t} using a word wall. Students match words to pictures and use each in a spoken sentence.` },
-      { name: 'KWL Chart — K Column', type: 'Group Discussion',
-        desc: (t) => `As a class, fill in the "Know" column of a KWL chart about ${t}. Students contribute ideas; teacher facilitates and corrects obvious misconceptions gently.` },
+      {
+        name: 'Think-Pair-Share', type: 'Discussion',
+        desc: (t) => `Children write or whisper to a partner: one thing they know about ${t}. Share responses as a class. Teacher records ideas in a mind-map on the board.`
+      },
+      {
+        name: 'Vocabulary Preview', type: 'Guided Discovery',
+        desc: (t) => `Introduce 4–5 key words for ${t} using a word wall. Students match words to pictures and use each in a spoken sentence.`
+      },
+      {
+        name: 'KWL Chart — K Column', type: 'Group Discussion',
+        desc: (t) => `As a class, fill in the "Know" column of a KWL chart about ${t}. Students contribute ideas; teacher facilitates and corrects obvious misconceptions gently.`
+      },
     ],
     advanced: [
-      { name: 'Prior Knowledge Poll', type: 'Hook Activity',
-        desc: (t) => `Quick 5-question true/false quiz about ${t} (paper or whiteboard). No marks — purely to reveal what students already know and set curiosity gaps.` },
-      { name: 'KWL Chart — K & W Columns', type: 'Independent Reflection',
-        desc: (t) => `Students complete the K (Know) and W (Want to know) columns of a KWL chart for ${t} individually, then compare with a partner before class discussion.` },
-      { name: 'Concept Map Draft', type: 'Group Work',
-        desc: (t) => `In groups of 3, students create a draft concept map with ${t} at the centre. Add at least 5 connecting ideas. Share and discuss differences between groups.` },
+      {
+        name: 'Prior Knowledge Poll', type: 'Hook Activity',
+        desc: (t) => `Quick 5-question true/false quiz about ${t} (paper or whiteboard). No marks — purely to reveal what students already know and set curiosity gaps.`
+      },
+      {
+        name: 'KWL Chart — K & W Columns', type: 'Independent Reflection',
+        desc: (t) => `Students complete the K (Know) and W (Want to know) columns of a KWL chart for ${t} individually, then compare with a partner before class discussion.`
+      },
+      {
+        name: 'Concept Map Draft', type: 'Group Work',
+        desc: (t) => `In groups of 3, students create a draft concept map with ${t} at the centre. Add at least 5 connecting ideas. Share and discuss differences between groups.`
+      },
     ],
   },
 
   tuesday: {
     simple: [
-      { name: 'Teacher Explanation with Visuals', type: 'Direct Instruction',
-        desc: (t) => `Teacher explains 2–3 core ideas about ${t} using large visual aids. After each idea, children repeat a key phrase together and do a simple action.` },
-      { name: 'Matching Activity', type: 'Guided Discovery',
-        desc: (t) => `Children match word cards to picture cards related to ${t}. Work in pairs. Teacher walks around asking: "Why did you match these?"` },
-      { name: 'Sorting Game', type: 'Hands-on Learning',
-        desc: (t) => `Provide sets of cards or objects. Children sort them into categories linked to ${t}. Discuss sorting decisions as a class.` },
+      {
+        name: 'Teacher Explanation with Visuals', type: 'Direct Instruction',
+        desc: (t) => `Teacher explains 2–3 core ideas about ${t} using large visual aids. After each idea, children repeat a key phrase together and do a simple action.`
+      },
+      {
+        name: 'Matching Activity', type: 'Guided Discovery',
+        desc: (t) => `Children match word cards to picture cards related to ${t}. Work in pairs. Teacher walks around asking: "Why did you match these?"`
+      },
+      {
+        name: 'Sorting Game', type: 'Hands-on Learning',
+        desc: (t) => `Provide sets of cards or objects. Children sort them into categories linked to ${t}. Discuss sorting decisions as a class.`
+      },
     ],
     moderate: [
-      { name: 'Diagram Study', type: 'Visual Analysis',
-        desc: (t) => `Students examine a labelled diagram of ${t}. In pairs, they describe each part to each other using the diagram vocabulary. Teacher clarifies after.` },
-      { name: 'Fact Discovery Reading', type: 'Guided Reading',
-        desc: (t) => `Read a short informational text (½ page) about ${t}. Students underline 3 key facts. Share facts with the group and add to the class fact board.` },
-      { name: 'Show & Explain', type: 'Teacher Demonstration',
-        desc: (t) => `Teacher demonstrates a concept or process related to ${t} step-by-step, thinking aloud. Students record one observation after each step.` },
+      {
+        name: 'Diagram Study', type: 'Visual Analysis',
+        desc: (t) => `Students examine a labelled diagram of ${t}. In pairs, they describe each part to each other using the diagram vocabulary. Teacher clarifies after.`
+      },
+      {
+        name: 'Fact Discovery Reading', type: 'Guided Reading',
+        desc: (t) => `Read a short informational text (½ page) about ${t}. Students underline 3 key facts. Share facts with the group and add to the class fact board.`
+      },
+      {
+        name: 'Show & Explain', type: 'Teacher Demonstration',
+        desc: (t) => `Teacher demonstrates a concept or process related to ${t} step-by-step, thinking aloud. Students record one observation after each step.`
+      },
     ],
     advanced: [
-      { name: 'Structured Note-Taking', type: 'Direct Instruction',
-        desc: (t) => `Teacher presents 4–5 core concepts of ${t} using a slide deck or whiteboard. Students take notes in a provided two-column format (concept / detail).` },
-      { name: 'Annotated Diagram', type: 'Independent Task',
-        desc: (t) => `Students label and annotate a blank diagram related to ${t} using their notes and a reference sheet. Compare annotations with a partner.` },
-      { name: 'Peer Explanation Round', type: 'Collaborative Learning',
-        desc: (t) => `Each student explains one concept of ${t} to a partner in 2 minutes. The partner asks one follow-up question. Roles then swap.` },
+      {
+        name: 'Structured Note-Taking', type: 'Direct Instruction',
+        desc: (t) => `Teacher presents 4–5 core concepts of ${t} using a slide deck or whiteboard. Students take notes in a provided two-column format (concept / detail).`
+      },
+      {
+        name: 'Annotated Diagram', type: 'Independent Task',
+        desc: (t) => `Students label and annotate a blank diagram related to ${t} using their notes and a reference sheet. Compare annotations with a partner.`
+      },
+      {
+        name: 'Peer Explanation Round', type: 'Collaborative Learning',
+        desc: (t) => `Each student explains one concept of ${t} to a partner in 2 minutes. The partner asks one follow-up question. Roles then swap.`
+      },
     ],
   },
 
   wednesday: {
     simple: [
-      { name: 'Craft Activity', type: 'Creative Arts',
-        desc: (t) => `Children create a simple craft linked to ${t} (e.g., drawing, colouring, cutting and sticking). Teacher narrates and reinforces vocabulary during the activity.` },
-      { name: 'Movement Game', type: 'Music & Movement',
-        desc: (t) => `Active game where children respond to ${t}-related prompts with a physical action (jump, clap, sit). Reinforces categorisation and listening skills.` },
-      { name: 'Guided Drawing', type: 'Visual Learning',
-        desc: (t) => `Teacher draws a simple image linked to ${t} step-by-step. Children follow along at their desks, labelling key parts as they go.` },
+      {
+        name: 'Craft Activity', type: 'Creative Arts',
+        desc: (t) => `Children create a simple craft linked to ${t} (e.g., drawing, colouring, cutting and sticking). Teacher narrates and reinforces vocabulary during the activity.`
+      },
+      {
+        name: 'Movement Game', type: 'Music & Movement',
+        desc: (t) => `Active game where children respond to ${t}-related prompts with a physical action (jump, clap, sit). Reinforces categorisation and listening skills.`
+      },
+      {
+        name: 'Guided Drawing', type: 'Visual Learning',
+        desc: (t) => `Teacher draws a simple image linked to ${t} step-by-step. Children follow along at their desks, labelling key parts as they go.`
+      },
     ],
     moderate: [
-      { name: 'Group Poster', type: 'Collaborative Project',
-        desc: (t) => `Small groups (3–4) create an information poster about ${t}. Each group member is responsible for one section: title, facts, diagram, and key question.` },
-      { name: 'Investigation Station', type: 'Hands-on Task',
-        desc: (t) => `Stations around the room each focus on one aspect of ${t}. Groups rotate every 8–10 minutes, completing a recording sheet at each station.` },
-      { name: 'Role Play', type: 'Drama & Discussion',
-        desc: (t) => `Students act out a short scenario connected to ${t}. Teacher assigns roles and guides with prompt cards. Debrief: what did we learn from the role play?` },
+      {
+        name: 'Group Poster', type: 'Collaborative Project',
+        desc: (t) => `Small groups (3–4) create an information poster about ${t}. Each group member is responsible for one section: title, facts, diagram, and key question.`
+      },
+      {
+        name: 'Investigation Station', type: 'Hands-on Task',
+        desc: (t) => `Stations around the room each focus on one aspect of ${t}. Groups rotate every 8–10 minutes, completing a recording sheet at each station.`
+      },
+      {
+        name: 'Role Play', type: 'Drama & Discussion',
+        desc: (t) => `Students act out a short scenario connected to ${t}. Teacher assigns roles and guides with prompt cards. Debrief: what did we learn from the role play?`
+      },
     ],
     advanced: [
-      { name: 'Guided Experiment / Inquiry', type: 'Hands-on Investigation',
-        desc: (t) => `Students follow a structured inquiry protocol to explore one aspect of ${t}. Record hypothesis, method, observations, and preliminary conclusion.` },
-      { name: 'Case Study Analysis', type: 'Problem Solving',
-        desc: (t) => `Groups analyse a real-world scenario connected to ${t}. Identify the key issue, discuss causes and effects, then propose a solution with evidence.` },
-      { name: 'Structured Group Task', type: 'Collaborative Project',
-        desc: (t) => `Groups of 4 produce a joint artefact (chart, model, script) demonstrating their understanding of ${t}. Assign roles: leader, recorder, reporter, timekeeper.` },
+      {
+        name: 'Guided Experiment / Inquiry', type: 'Hands-on Investigation',
+        desc: (t) => `Students follow a structured inquiry protocol to explore one aspect of ${t}. Record hypothesis, method, observations, and preliminary conclusion.`
+      },
+      {
+        name: 'Case Study Analysis', type: 'Problem Solving',
+        desc: (t) => `Groups analyse a real-world scenario connected to ${t}. Identify the key issue, discuss causes and effects, then propose a solution with evidence.`
+      },
+      {
+        name: 'Structured Group Task', type: 'Collaborative Project',
+        desc: (t) => `Groups of 4 produce a joint artefact (chart, model, script) demonstrating their understanding of ${t}. Assign roles: leader, recorder, reporter, timekeeper.`
+      },
     ],
   },
 
   thursday: {
     simple: [
-      { name: 'Worksheet Practice', type: 'Independent Practice',
-        desc: (t) => `Children complete a short themed worksheet with pictures and simple tracing or circling tasks related to ${t}. Teacher assists in small groups.` },
-      { name: 'Story Retelling', type: 'Language Activity',
-        desc: (t) => `Using picture cards, children retell the ${t} story or lesson in their own words. Focus on using 2–3 key vocabulary words correctly.` },
-      { name: 'Partner Quiz', type: 'Peer Learning',
-        desc: (t) => `In pairs, children take turns asking and answering simple questions about ${t} using question prompt cards provided by the teacher.` },
+      {
+        name: 'Worksheet Practice', type: 'Independent Practice',
+        desc: (t) => `Children complete a short themed worksheet with pictures and simple tracing or circling tasks related to ${t}. Teacher assists in small groups.`
+      },
+      {
+        name: 'Story Retelling', type: 'Language Activity',
+        desc: (t) => `Using picture cards, children retell the ${t} story or lesson in their own words. Focus on using 2–3 key vocabulary words correctly.`
+      },
+      {
+        name: 'Partner Quiz', type: 'Peer Learning',
+        desc: (t) => `In pairs, children take turns asking and answering simple questions about ${t} using question prompt cards provided by the teacher.`
+      },
     ],
     moderate: [
-      { name: 'Practice Problems', type: 'Independent Task',
-        desc: (t) => `Students complete 6–8 practice items related to ${t} independently. Self-check answers using an answer key, then flag any they are unsure about.` },
-      { name: 'Group Challenge', type: 'Group Work',
-        desc: (t) => `Small groups tackle a problem-solving task connected to ${t}. Each group documents their approach and final answer on a shared card.` },
-      { name: 'Real-Life Connection', type: 'Discussion',
-        desc: (t) => `Students identify one real-life example of ${t} from their own experience or community. Share in a brief class discussion and explain the connection.` },
+      {
+        name: 'Practice Problems', type: 'Independent Task',
+        desc: (t) => `Students complete 6–8 practice items related to ${t} independently. Self-check answers using an answer key, then flag any they are unsure about.`
+      },
+      {
+        name: 'Group Challenge', type: 'Group Work',
+        desc: (t) => `Small groups tackle a problem-solving task connected to ${t}. Each group documents their approach and final answer on a shared card.`
+      },
+      {
+        name: 'Real-Life Connection', type: 'Discussion',
+        desc: (t) => `Students identify one real-life example of ${t} from their own experience or community. Share in a brief class discussion and explain the connection.`
+      },
     ],
     advanced: [
-      { name: 'Extended Practice Set', type: 'Independent Task',
-        desc: (t) => `Students independently complete a structured set of 8–10 questions covering different aspects of ${t}. Include application, analysis, and one open-ended question.` },
-      { name: 'Peer Teaching', type: 'Collaborative Learning',
-        desc: (t) => `Students who have mastered a concept of ${t} explain it to a peer who needs support. Teacher monitors and intervenes where explanations need correction.` },
-      { name: 'Scenario Application', type: 'Problem Solving',
-        desc: (t) => `Present a novel scenario where students must apply what they know about ${t}. Students write a structured response: situation, approach, conclusion.` },
+      {
+        name: 'Extended Practice Set', type: 'Independent Task',
+        desc: (t) => `Students independently complete a structured set of 8–10 questions covering different aspects of ${t}. Include application, analysis, and one open-ended question.`
+      },
+      {
+        name: 'Peer Teaching', type: 'Collaborative Learning',
+        desc: (t) => `Students who have mastered a concept of ${t} explain it to a peer who needs support. Teacher monitors and intervenes where explanations need correction.`
+      },
+      {
+        name: 'Scenario Application', type: 'Problem Solving',
+        desc: (t) => `Present a novel scenario where students must apply what they know about ${t}. Students write a structured response: situation, approach, conclusion.`
+      },
     ],
   },
 
   friday: {
     simple: [
-      { name: 'Star of the Week Share', type: 'Sharing Circle',
-        desc: (t) => `Each child shares one thing they learned about ${t} this week. Teacher prompts with: "Tell me one thing you remember." Celebrate all contributions.` },
-      { name: 'Thumbs Check', type: 'Formative Assessment',
-        desc: (t) => `Teacher states 5 sentences about ${t} — some true, some false. Children show thumbs up (true) or thumbs down (false). Discuss any disagreements.` },
-      { name: 'Draw What You Know', type: 'Creative Assessment',
-        desc: (t) => `Children draw and label their favourite thing they learned about ${t} this week. Drawings are shared and displayed as a class gallery.` },
+      {
+        name: 'Star of the Week Share', type: 'Sharing Circle',
+        desc: (t) => `Each child shares one thing they learned about ${t} this week. Teacher prompts with: "Tell me one thing you remember." Celebrate all contributions.`
+      },
+      {
+        name: 'Thumbs Check', type: 'Formative Assessment',
+        desc: (t) => `Teacher states 5 sentences about ${t} — some true, some false. Children show thumbs up (true) or thumbs down (false). Discuss any disagreements.`
+      },
+      {
+        name: 'Draw What You Know', type: 'Creative Assessment',
+        desc: (t) => `Children draw and label their favourite thing they learned about ${t} this week. Drawings are shared and displayed as a class gallery.`
+      },
     ],
     moderate: [
-      { name: 'Exit Quiz', type: 'Formative Assessment',
-        desc: (t) => `Students complete a 5-question written quiz covering the week\'s learning about ${t}. Teacher reviews responses to identify gaps before the next unit.` },
-      { name: 'KWL Completion', type: 'Reflection',
-        desc: (t) => `Students complete the "Learned" column of their KWL chart for ${t}. Compare with the "Want to Know" column — were all questions answered?` },
-      { name: 'Group Presentation', type: 'Peer Sharing',
-        desc: (t) => `Each group presents their poster or key findings about ${t} in 2 minutes. Class members give one piece of positive feedback to each group.` },
+      {
+        name: 'Exit Quiz', type: 'Formative Assessment',
+        desc: (t) => `Students complete a 5-question written quiz covering the week\'s learning about ${t}. Teacher reviews responses to identify gaps before the next unit.`
+      },
+      {
+        name: 'KWL Completion', type: 'Reflection',
+        desc: (t) => `Students complete the "Learned" column of their KWL chart for ${t}. Compare with the "Want to Know" column — were all questions answered?`
+      },
+      {
+        name: 'Group Presentation', type: 'Peer Sharing',
+        desc: (t) => `Each group presents their poster or key findings about ${t} in 2 minutes. Class members give one piece of positive feedback to each group.`
+      },
     ],
     advanced: [
-      { name: 'Topic Quiz', type: 'Summative Assessment',
-        desc: (t) => `Students complete a 10-question quiz (mix of multiple choice, short answer, and one explanation question) assessing the week\'s understanding of ${t}.` },
-      { name: 'Reflection Journal', type: 'Self-Assessment',
-        desc: (t) => `Students write a structured reflection: (1) Most important thing I learned about ${t}, (2) One question I still have, (3) How I would rate my own understanding.` },
-      { name: 'KWL Final + Peer Review', type: 'Collaborative Review',
-        desc: (t) => `Students finalise their KWL chart and swap with a partner to compare learnings. Discuss: what did we both learn? What do we still disagree on regarding ${t}?` },
+      {
+        name: 'Topic Quiz', type: 'Summative Assessment',
+        desc: (t) => `Students complete a 10-question quiz (mix of multiple choice, short answer, and one explanation question) assessing the week\'s understanding of ${t}.`
+      },
+      {
+        name: 'Reflection Journal', type: 'Self-Assessment',
+        desc: (t) => `Students write a structured reflection: (1) Most important thing I learned about ${t}, (2) One question I still have, (3) How I would rate my own understanding.`
+      },
+      {
+        name: 'KWL Final + Peer Review', type: 'Collaborative Review',
+        desc: (t) => `Students finalise their KWL chart and swap with a partner to compare learnings. Discuss: what did we both learn? What do we still disagree on regarding ${t}?`
+      },
     ],
   },
 };
@@ -705,7 +799,7 @@ const WEEK_PROGRESSIONS = [
 const buildDayActivities = (topic, dayKey, profile, sessionDuration, weekIndex = 0, category) => {
 
   let pool = ACTIVITY_POOLS[dayKey]?.[profile.complexity] || ACTIVITY_POOLS.monday.moderate;
-  
+
   if (CATEGORY_OVERRIDES[category] && CATEGORY_OVERRIDES[category][profile.complexity]) {
 
     pool = [...CATEGORY_OVERRIDES[category][profile.complexity], ...pool];
@@ -723,10 +817,10 @@ const buildDayActivities = (topic, dayKey, profile, sessionDuration, weekIndex =
     let finalDesc = typeof tpl.desc === 'function' ? tpl.desc(topic) : tpl.desc;
 
     if (typeof tpl.desc === 'function' && tpl.desc.toString().includes('`')) {
-        finalDesc = getRandomTemplate([
-            (t) => tpl.desc(t),
-            (t) => `Alternative: ${tpl.desc(t).replace('Teacher', 'Instructor').replace('Children', 'Students')}`
-        ], topic);
+      finalDesc = getRandomTemplate([
+        (t) => tpl.desc(t),
+        (t) => `Alternative: ${tpl.desc(t).replace('Teacher', 'Instructor').replace('Children', 'Students')}`
+      ], topic);
     }
 
     return {
