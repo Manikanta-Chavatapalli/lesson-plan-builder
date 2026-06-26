@@ -51,10 +51,11 @@ const AppLayout = () => {
         let currentAlerts = [];
         if (user.role === 'counsellor') {
           // You need to import apiClient at the top of the file
-          const { data } = await apiClient.get('/counsellor/alerts');
+          const timestamp = Date.now();
+          const { data } = await apiClient.get(`/counsellor/alerts?t=${timestamp}`);
           currentAlerts = data.data || [];
 
-          const enquiriesRes = await apiClient.get('/counsellor/enquiries');
+          const enquiriesRes = await apiClient.get(`/counsellor/enquiries?t=${timestamp}`);
           const currentEnquiries = enquiriesRes.data.data || [];
 
           if (mounted) {

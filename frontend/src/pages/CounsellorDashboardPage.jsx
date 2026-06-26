@@ -35,14 +35,16 @@ const CounsellorDashboardPage = () => {
   // Modal states
   const [selectedViewEnquiry, setSelectedViewEnquiry] = useState(null);
   const [responseModal, setResponseModal] = useState({ open: false, enquiry: null, message: '' });
+  const [isSubmittingResponse, setIsSubmittingResponse] = useState(false);
 
   const fetchData = async (showLoading = true) => {
     if (showLoading) setLoading(true);
     try {
+      const timestamp = Date.now();
       const [alertsRes, enqRes, statsRes] = await Promise.all([
-        apiClient.get('/counsellor/alerts'),
-        apiClient.get('/counsellor/enquiries'),
-        apiClient.get('/counsellor/teacher-stats')
+        apiClient.get(`/counsellor/alerts?t=${timestamp}`),
+        apiClient.get(`/counsellor/enquiries?t=${timestamp}`),
+        apiClient.get(`/counsellor/teacher-stats?t=${timestamp}`)
       ]);
 
       setAlerts(alertsRes.data?.data || []);
@@ -134,6 +136,8 @@ const CounsellorDashboardPage = () => {
   };
 
   const handleRespond = async () => {
+    if (isSubmittingResponse) return;
+    setIsSubmittingResponse(true);
     try {
       await apiClient.post(`/counsellor/enquiries/${responseModal.enquiry.id}/respond`, {
         responseMessage: responseModal.message
@@ -149,6 +153,8 @@ const CounsellorDashboardPage = () => {
       fetchData(false);
     } catch (err) {
       setResponseError('Failed to send response: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setIsSubmittingResponse(false);
     }
   };
 
@@ -448,9 +454,9 @@ const CounsellorDashboardPage = () => {
                 <button
                   type="submit"
                   className="btn btn--primary"
-                  disabled={!responseModal.message.trim()}
+                  disabled={!responseModal.message.trim() || isSubmittingResponse}
                 >
-                  Send Response
+                  {isSubmittingResponse ? 'Sending...' : 'Send Response'}
                 </button>
               </div>
             </form>
