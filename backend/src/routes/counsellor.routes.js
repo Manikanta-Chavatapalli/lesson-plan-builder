@@ -108,12 +108,16 @@ class CounsellorService {
     const updated = await enquiryModel.update(id, updateData);
 
     const { default: emailService } = await import('../utils/email.js');
-    emailService.sendEnquiryResponse(
-      existing.parentEmail,
-      existing.parentName,
-      existing.message,
-      responseMessage
-    ).catch(err => console.error('Failed to send response email:', err));
+    try {
+      await emailService.sendEnquiryResponse(
+        existing.parentEmail,
+        existing.parentName,
+        existing.message,
+        responseMessage
+      );
+    } catch (err) {
+      console.error('Failed to send response email:', err);
+    }
 
     await activityLogService.create({
       recordId: id,

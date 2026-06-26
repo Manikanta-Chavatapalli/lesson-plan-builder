@@ -107,7 +107,7 @@ const AppLayout = () => {
                 fetchAlertsAndEnquiries();
                 window.dispatchEvent(new CustomEvent('new-alert-received'));
               }
-            }, 500);
+            }, 1200);
           }
         } catch (e) {
           console.error('Failed to parse SSE data', e);

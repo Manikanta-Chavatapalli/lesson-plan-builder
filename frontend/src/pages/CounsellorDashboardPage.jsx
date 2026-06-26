@@ -77,7 +77,7 @@ const CounsellorDashboardPage = () => {
         if (selectedTeacher) {
           handleTeacherClick(selectedTeacher, false);
         }
-      }, 500);
+      }, 1000);
     };
 
     window.addEventListener('new-alert-received', handleNewAlert);

@@ -206,12 +206,16 @@ const updateStatus = asyncHandler(async (req, res) => {
     }
 
     const { default: emailService } = await import('../utils/email.js');
-    emailService.sendEnquiryResponse(
-      enquiry.parentEmail,
-      enquiry.parentName,
-      enquiry.message,
-      responseMessage
-    ).catch(err => console.error('Failed to send response email:', err));
+    try {
+      await emailService.sendEnquiryResponse(
+        enquiry.parentEmail,
+        enquiry.parentName,
+        enquiry.message,
+        responseMessage
+      );
+    } catch (err) {
+      console.error('Failed to send response email:', err);
+    }
   }
 
   const respondedBy = req.user.role === 'counsellor' ? 'counsellor' : (req.user.role === 'teacher' ? 'teacher' : null);
