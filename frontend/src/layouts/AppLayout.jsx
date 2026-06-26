@@ -101,8 +101,12 @@ const AppLayout = () => {
         try {
           const data = JSON.parse(event.data);
           if (data.type === 'NEW_ALERT') {
-            fetchAlertsAndEnquiries();
-            window.dispatchEvent(new CustomEvent('new-alert-received'));
+            setTimeout(() => {
+              if (mounted) {
+                fetchAlertsAndEnquiries();
+                window.dispatchEvent(new CustomEvent('new-alert-received'));
+              }
+            }, 500);
           }
         } catch (e) {
           console.error('Failed to parse SSE data', e);
