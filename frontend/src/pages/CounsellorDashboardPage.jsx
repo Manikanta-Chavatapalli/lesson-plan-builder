@@ -21,13 +21,13 @@ const CounsellorDashboardPage = () => {
   const [alerts, setAlerts] = useState([]);
   const [enquiries, setEnquiries] = useState([]);
   const [teacherStats, setTeacherStats] = useState([]);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [responseError, setResponseError] = useState('');
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [teacherEnquiries, setTeacherEnquiries] = useState([]);
-  
+
   // Tab states
   const [counsellorEnquiriesTab, setCounsellorEnquiriesTab] = useState('pending');
   const [teacherSubTab, setTeacherSubTab] = useState('not-responded');
@@ -44,7 +44,7 @@ const CounsellorDashboardPage = () => {
         apiClient.get('/counsellor/enquiries'),
         apiClient.get('/counsellor/teacher-stats')
       ]);
-      
+
       setAlerts(alertsRes.data?.data || []);
       setEnquiries(enqRes.data?.data || []);
       setTeacherStats(statsRes.data?.data || []);
@@ -61,11 +61,21 @@ const CounsellorDashboardPage = () => {
   }, []);
 
   useEffect(() => {
+    // Ensure we have fresh data when switching dashboard tabs, 
+    // unless it's the initial mount which is handled above.
+    // To prevent double fetch on mount, we can just rely on activeTab changes 
+    // but the simplest safe way without refactoring is to just call it.
+    fetchData(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const handleNewAlert = () => {
-      fetchData(false);
-      if (selectedTeacher) {
-        handleTeacherClick(selectedTeacher, false);
-      }
+      setTimeout(() => {
+        fetchData(false);
+        if (selectedTeacher) {
+          handleTeacherClick(selectedTeacher, false);
+        }
+      }, 500);
     };
 
     window.addEventListener('new-alert-received', handleNewAlert);
@@ -79,7 +89,7 @@ const CounsellorDashboardPage = () => {
       const teacherData = res.data?.data || [];
       setTeacherEnquiries(teacherData);
       setSelectedTeacher(teacher);
-      
+
       // Auto switch tab based on data
       const hasNew = teacherData.some(e => e.status?.toLowerCase() === 'new');
       if (hasNew) {
@@ -128,10 +138,10 @@ const CounsellorDashboardPage = () => {
       await apiClient.post(`/counsellor/enquiries/${responseModal.enquiry.id}/respond`, {
         responseMessage: responseModal.message
       });
-      
+
       setResponseModal({ open: false, enquiry: null, message: '' });
       setResponseError('');
-      
+
       // Refresh current view
       if (selectedTeacher) {
         handleTeacherClick(selectedTeacher, false);
@@ -189,8 +199,8 @@ const CounsellorDashboardPage = () => {
                   </p>
                 </div>
                 <div className="alert-card-actions">
-                  <button 
-                    className="btn btn--primary" 
+                  <button
+                    className="btn btn--primary"
                     onClick={() => setSelectedViewEnquiry(alert)}
                   >
                     View
@@ -207,13 +217,13 @@ const CounsellorDashboardPage = () => {
   const renderCounsellorEnquiriesTab = () => (
     <div className="enquiries-container">
       <div className="tabs-container">
-        <button 
+        <button
           className={`btn tab-btn-top ${counsellorEnquiriesTab === 'pending' ? 'btn--primary' : 'btn--ghost'}`}
           onClick={() => setCounsellorEnquiriesTab('pending')}
         >
           Not Responded
         </button>
-        <button 
+        <button
           className={`btn tab-btn-top ${counsellorEnquiriesTab === 'responded' ? 'btn--primary' : 'btn--ghost'}`}
           onClick={() => setCounsellorEnquiriesTab('responded')}
         >
@@ -222,16 +232,16 @@ const CounsellorDashboardPage = () => {
       </div>
 
       {enquiries.filter(e => e.status?.toLowerCase() === counsellorEnquiriesTab).length === 0 ? (
-        <EmptyState 
-          icon={counsellorEnquiriesTab === 'responded' ? '✅' : '📥'} 
-          message={`No ${counsellorEnquiriesTab === 'responded' ? 'responded' : 'pending'} counsellor enquiries found.`} 
+        <EmptyState
+          icon={counsellorEnquiriesTab === 'responded' ? '✅' : '📥'}
+          message={`No ${counsellorEnquiriesTab === 'responded' ? 'responded' : 'pending'} counsellor enquiries found.`}
         />
       ) : (
         <div className="card-grid">
           {enquiries
             .filter(e => e.status?.toLowerCase() === counsellorEnquiriesTab)
             .map(enq => (
-              <EnquiryCard 
+              <EnquiryCard
                 key={enq.id}
                 item={enq}
                 customActions={
@@ -257,8 +267,8 @@ const CounsellorDashboardPage = () => {
       return (
         <div className="teacher-details-container">
           <div className="teacher-details-header">
-            <button 
-              className="btn btn--ghost btn--sm btn-back-icon" 
+            <button
+              className="btn btn--ghost btn--sm btn-back-icon"
               onClick={() => setSelectedTeacher(null)}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -269,37 +279,37 @@ const CounsellorDashboardPage = () => {
             </button>
             <h3 className="teacher-details-title">Enquiries for {selectedTeacher.name}</h3>
           </div>
-          
+
           <div className="tabs-container">
-            <button 
+            <button
               className={`btn tab-btn-top ${teacherSubTab === 'alerts' ? 'btn--primary' : 'btn--ghost'}`}
               onClick={() => setTeacherSubTab('alerts')}
             >
               Alerts
             </button>
-            <button 
+            <button
               className={`btn tab-btn-top ${teacherSubTab === 'not-responded' ? 'btn--primary' : 'btn--ghost'}`}
               onClick={() => setTeacherSubTab('not-responded')}
             >
               Not Responded
             </button>
-            <button 
+            <button
               className={`btn tab-btn-top ${teacherSubTab === 'responded' ? 'btn--primary' : 'btn--ghost'}`}
               onClick={() => setTeacherSubTab('responded')}
             >
               Responded
             </button>
           </div>
-          
+
           <div>
             {teacherEnquiries.filter(e => {
               if (teacherSubTab === 'alerts') return e.status?.toLowerCase() === 'new';
               if (teacherSubTab === 'not-responded') return e.status?.toLowerCase() === 'pending';
               return e.status?.toLowerCase() === 'responded';
             }).length === 0 ? (
-              <EmptyState 
-                icon={teacherSubTab === 'responded' ? '✅' : teacherSubTab === 'alerts' ? '🔕' : '⏳'} 
-                message={`No ${teacherSubTab === 'responded' ? 'responded' : teacherSubTab === 'alerts' ? 'new alerts' : 'pending enquiries'} found.`} 
+              <EmptyState
+                icon={teacherSubTab === 'responded' ? '✅' : teacherSubTab === 'alerts' ? '🔕' : '⏳'}
+                message={`No ${teacherSubTab === 'responded' ? 'responded' : teacherSubTab === 'alerts' ? 'new alerts' : 'pending enquiries'} found.`}
               />
             ) : (
               <div className="card-grid">
@@ -310,7 +320,7 @@ const CounsellorDashboardPage = () => {
                     return e.status?.toLowerCase() === 'responded';
                   })
                   .map(enq => (
-                    <EnquiryCard 
+                    <EnquiryCard
                       key={enq.id}
                       item={enq}
                       customActions={
@@ -341,7 +351,7 @@ const CounsellorDashboardPage = () => {
             <EmptyState icon="👥" message="No teachers found." />
           ) : (
             teacherStats.map((t, index) => (
-              <div 
+              <div
                 key={t.id}
                 onClick={() => handleTeacherClick(t)}
                 className="card hover-scale teacher-overview-item"
@@ -381,10 +391,10 @@ const CounsellorDashboardPage = () => {
               <h2 className="response-view-title">Respond to Enquiry</h2>
               <p className="response-view-subtitle">Send a response to the parent</p>
             </div>
-              <button className="btn btn--ghost" onClick={() => {
-                setResponseModal({ open: false, enquiry: null, message: '' });
-                setResponseError('');
-              }}>Cancel</button>
+            <button className="btn btn--ghost" onClick={() => {
+              setResponseModal({ open: false, enquiry: null, message: '' });
+              setResponseError('');
+            }}>Cancel</button>
           </div>
           <div className="card">
             <div className="response-detail-section">
@@ -428,15 +438,15 @@ const CounsellorDashboardPage = () => {
                 </div>
               )}
               <div className="response-actions">
-                <button 
-                  type="button" 
-                  className="btn btn--ghost" 
+                <button
+                  type="button"
+                  className="btn btn--ghost"
                   onClick={() => setResponseModal({ open: false, enquiry: null, message: '' })}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn btn--primary"
                   disabled={!responseModal.message.trim()}
                 >
@@ -452,11 +462,11 @@ const CounsellorDashboardPage = () => {
 
   return (
     <div className="page-container counsellor-page-container">
-      <PageHeader 
-        title="Counsellor Dashboard" 
-        subtitle="Manage alerts, teacher stats, and parent enquiries." 
+      <PageHeader
+        title="Counsellor Dashboard"
+        subtitle="Manage alerts, teacher stats, and parent enquiries."
       />
-      
+
       <ErrorAlert message={error} onDismiss={() => setError('')} />
 
       {loading ? <LoadingSpinner /> : (
@@ -467,7 +477,7 @@ const CounsellorDashboardPage = () => {
         </div>
       )}
 
-      <EnquiryViewModal 
+      <EnquiryViewModal
         selectedEnquiry={selectedViewEnquiry}
         onClose={() => setSelectedViewEnquiry(null)}
         onDelete={selectedViewEnquiry ? () => {
@@ -491,18 +501,18 @@ function formatTimeAgo(dateString) {
   const date = new Date(dateString);
   const now = new Date();
   const diffInSeconds = Math.floor((now - date) / 1000);
-  
+
   if (diffInSeconds < 60) return 'Just now';
-  
+
   const diffInMinutes = Math.floor(diffInSeconds / 60);
   if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-  
+
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) return `${diffInHours}h ago`;
-  
+
   const diffInDays = Math.floor(diffInHours / 24);
   if (diffInDays < 30) return `${diffInDays}d ago`;
-  
+
   return date.toLocaleDateString();
 }
 

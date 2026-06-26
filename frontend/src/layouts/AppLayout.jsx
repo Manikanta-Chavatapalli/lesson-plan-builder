@@ -149,12 +149,6 @@ const AppLayout = () => {
                   className="nav-alert-dot"
                 />
               )}
-              {to === '/counsellor/enquiries' && hasUnreadEnquiries && (
-                <span 
-                  title="New unread enquiries"
-                  className="nav-alert-dot"
-                />
-              )}
             </NavLink>
           ))}
         </nav>
