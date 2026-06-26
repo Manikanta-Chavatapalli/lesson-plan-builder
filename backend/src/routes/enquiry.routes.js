@@ -67,6 +67,32 @@ class EnquiryService {
           message: 'New enquiry created (email delivery failed)'
         });
       }
+    } else if (roleTarget === 'counsellor') {
+      try {
+        const allUsers = await userService.getAllUsers();
+        const counsellors = allUsers.filter(u => u.role === 'counsellor');
+        
+        const subject = 'New Parent Enquiry (Counsellor)';
+        const text = `Parent Name: ${parentName}\nParent Email: ${parentEmail}\nStudent: ${newEnquiry.studentName} (Class: ${newEnquiry.studentClass}, Section: ${newEnquiry.studentSection})\n\nMessage:\n${message}`;
+        
+        for (const counsellor of counsellors) {
+          try {
+            await sendEmail(counsellor.email, subject, text);
+          } catch (err) {
+            console.error(`Failed to send email to counsellor ${counsellor.email}:`, err);
+          }
+        }
+        
+        await activityLogService.create({
+          recordId: newEnquiry.id,
+          userId: counsellors.length > 0 ? counsellors[0].id : 'system',
+          type: 'enquiry',
+          action: 'Created',
+          message: 'New enquiry created and email sent to counsellor(s)'
+        });
+      } catch (error) {
+        console.error('Error in counsellor email process:', error);
+      }
     }
 
     return newEnquiry;

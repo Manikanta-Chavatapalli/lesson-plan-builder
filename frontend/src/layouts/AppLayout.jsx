@@ -95,7 +95,7 @@ const AppLayout = () => {
     // Set up Server-Sent Events (SSE) listener
     let eventSource;
     if (user) {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('intellitots_token');
       const API_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
       eventSource = new EventSource(`${API_URL}/api/stream?token=${token}`);
       eventSource.onmessage = (event) => {
