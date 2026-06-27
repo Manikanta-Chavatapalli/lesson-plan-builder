@@ -142,15 +142,26 @@ a {
 }
 
 @media (max-width: 768px) {
+  .app-header {
+    align-items: flex-start;
+  }
   .app-header__brand {
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
+    order: 1;
   }
   .app-header__user {
     flex-direction: column;
     align-items: stretch;
+    width: auto;
+    gap: 0.5rem;
+    order: 2;
+  }
+  .app-nav {
+    order: 3;
     width: 100%;
+    margin-top: 0.5rem;
   }
 }
 
