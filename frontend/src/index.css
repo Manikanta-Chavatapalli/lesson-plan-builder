@@ -3184,6 +3184,12 @@ p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
   align-items: center;
 }
 
+@media (max-width: 768px) {
+  .teacher-overview-card-main {
+    width: 100%;
+  }
+}
+
 .teacher-overview-title {
   margin-bottom: 20px;
 }
