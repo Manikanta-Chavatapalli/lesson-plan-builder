@@ -42,7 +42,13 @@ const RoleRoute = ({ children, allowedRoles }) => {
   const { user } = useAppContext();
   
   if (!user || !allowedRoles.includes(user.role)) {
-    return <Navigate to="/access-denied" replace />;
+    if (user) {
+      if (user.role === 'admin') return <Navigate to="/admin" replace />;
+      if (user.role === 'head') return <Navigate to="/overview" replace />;
+      if (user.role === 'counsellor') return <Navigate to="/counsellor/teacher-data" replace />;
+      return <Navigate to="/dashboard" replace />;
+    }
+    return <Navigate to="/" replace />;
   }
   
   return children;

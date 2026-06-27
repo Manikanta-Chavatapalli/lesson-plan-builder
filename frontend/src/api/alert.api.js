@@ -1,7 +1,7 @@
 import apiClient from './axios.js';
 
 export const getAlerts = async () => {
-  const { data } = await apiClient.get('/alerts');
+  const { data } = await apiClient.get(`/alerts?t=${Date.now()}`);
   return data;
 };
 
