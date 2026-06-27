@@ -128,10 +128,16 @@ a {
   transition: color 0.2s, border-color 0.2s;
 }
 
-.app-nav__link:hover,
 .app-nav__link.active {
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
+}
+
+@media (hover: hover) {
+  .app-nav__link:hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
 }
 
 .app-header__user {
