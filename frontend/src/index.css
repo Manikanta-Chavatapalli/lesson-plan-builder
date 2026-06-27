@@ -141,6 +141,13 @@ a {
   font-size: 0.875rem;
 }
 
+
+.btn-icon-mobile-only {
+  display: none;
+}
+.btn-text-mobile-hide {
+  display: inline;
+}
 @media (max-width: 768px) {
   .app-header {
     display: grid;
@@ -159,10 +166,18 @@ a {
   .app-header__user {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
     width: auto;
     gap: 0.5rem;
+  }
+
+  .btn-icon-mobile-only {
+    display: inline;
+    font-size: 1.1rem;
+  }
+  .btn-text-mobile-hide {
+    display: none;
   }
   .app-nav {
     grid-column: 1 / -1;

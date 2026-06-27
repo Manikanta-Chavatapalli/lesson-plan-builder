@@ -160,11 +160,16 @@ const AppLayout = () => {
         <div className="app-header__user">
           <button 
             type="button" 
-            className="btn btn--secondary btn--sm" 
+            className="btn btn--secondary btn--sm theme-toggle-btn" 
             onClick={toggleTheme}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+            <span className="btn-icon-mobile-only">
+              {theme === 'light' ? '🌙' : '☀️'}
+            </span>
+            <span className="btn-text-mobile-hide">
+              {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+            </span>
           </button>
           <button 
             type="button" 
@@ -176,13 +181,13 @@ const AppLayout = () => {
             {isLoggingOut ? (
               <span className="spinner-icon">⏳</span>
             ) : (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="logout-svg-icon">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             )}
-            <span>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+            <span className="btn-text-mobile-hide">{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
           </button>
         </div>
       </header>
