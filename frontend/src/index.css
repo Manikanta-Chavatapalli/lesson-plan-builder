@@ -204,8 +204,8 @@ a {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 5px;
-    gap: 0.25rem;
-    justify-content: space-between;
+    gap: 0.5rem;
+    justify-content: flex-start;
   }
   
   .app-nav::-webkit-scrollbar {
@@ -216,9 +216,9 @@ a {
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: 2px;
-    font-size: clamp(0.75rem, 2.8vw, 0.875rem);
-    padding: 0.2rem 0;
+    gap: 4px;
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
   }
 }
 
