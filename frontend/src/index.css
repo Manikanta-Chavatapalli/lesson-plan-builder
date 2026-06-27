@@ -3248,6 +3248,19 @@ p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
   font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  .teacher-overview-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .teacher-overview-item-stats {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+}
+
 /* Modal Parent Message Extracted */
 .modal-message-box-styled {
   background: var(--color-surface);
