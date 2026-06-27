@@ -69,13 +69,13 @@ class AlertService {
           enquiryMessage: record.message
         });
       }
-      if (record.priority === 'High' && record.status?.toLowerCase() !== 'completed' && record.status?.toLowerCase() !== 'responded') {
+      if (record.status?.toLowerCase() !== 'completed' && record.status?.toLowerCase() !== 'responded') {
         alerts.push({
-          id: `alert-high-priority-${record.id}`,
+          id: `alert-status-${record.id}`,
           recordId: record.id,
           type: record.type,
-          message: `Urgent: '${record.title}' is marked as High Priority.`,
-          priority: 'High',
+          message: `Status Alert: '${record.title}' is ${record.status} with ${record.priority} priority.`,
+          priority: record.priority,
           date: new Date().toISOString()
         });
       }
