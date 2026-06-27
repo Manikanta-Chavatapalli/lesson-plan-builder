@@ -179,6 +179,16 @@ a {
   .btn-text-mobile-hide {
     display: none;
   }
+
+  .app-header__user .btn {
+    padding: 0.5rem !important;
+    min-width: 40px !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
   .app-nav {
     grid-column: 1 / -1;
     grid-row: 2 / 3;
