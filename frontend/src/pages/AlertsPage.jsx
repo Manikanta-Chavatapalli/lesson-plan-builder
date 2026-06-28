@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorAlert from '../components/ErrorAlert.jsx';
 import EmptyState from '../components/EmptyState.jsx';
-import { getAlerts, acknowledgeAlert } from '../api/alert.api.js';
+import { getAlerts, acknowledgeAlert, sessionDismissedAlerts } from '../api/alert.api.js';
 import { updateEnquiryStatus, deleteEnquiry } from '../api/enquiry.api.js';
 import { getApiError } from '../services/index.js';
 import EnquiryViewModal from '../components/EnquiryViewModal.jsx';
@@ -19,7 +19,8 @@ const AlertsPage = () => {
   const loadAlerts = async () => {
     try {
       const response = await getAlerts();
-      setItems(Array.isArray(response.data) ? response.data : []);
+      const allAlerts = Array.isArray(response.data) ? response.data : [];
+      setItems(allAlerts.filter(a => !sessionDismissedAlerts.has(a.id)));
     } catch (err) {
       setError(getApiError(err).message);
     } finally {
@@ -56,6 +57,7 @@ const AlertsPage = () => {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
         await updateEnquiryStatus(enqId, 'Pending');
+        sessionDismissedAlerts.add(alertId);
       } else {
         await acknowledgeAlert(alertId);
       }
@@ -72,6 +74,7 @@ const AlertsPage = () => {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
         await deleteEnquiry(enqId);
+        sessionDismissedAlerts.add(alertId);
       } else {
         await acknowledgeAlert(alertId);
       }

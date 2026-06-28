@@ -1,13 +1,16 @@
 import apiClient from './axios.js';
 
+export const sessionDismissedAlerts = new Set();
+
 export const getAlerts = async () => {
   const { data } = await apiClient.get(`/alerts?t=${Date.now()}`);
   return data;
 };
 
 export const acknowledgeAlert = async (id) => {
+  sessionDismissedAlerts.add(id);
   const { data } = await apiClient.delete(`/alerts/${id}`);
   return data;
 };
 
-export default { getAlerts, acknowledgeAlert };
+export default { getAlerts, acknowledgeAlert, sessionDismissedAlerts };

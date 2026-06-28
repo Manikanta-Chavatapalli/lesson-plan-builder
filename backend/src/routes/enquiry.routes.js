@@ -230,6 +230,8 @@ const deleteEnquiry = asyncHandler(async (req, res) => {
   const data = await enquiryService.delete(req.params.id);
 
   alertService.acknowledgeByActionLink(`/enquiries/${req.params.id}/verify`);
+  
+  sseService.broadcast({ type: 'NEW_ALERT' });
 
   return successResponse(res, data, 'Enquiry deleted successfully');
 });

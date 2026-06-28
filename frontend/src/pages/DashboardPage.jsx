@@ -6,7 +6,7 @@ import ErrorAlert from '../components/ErrorAlert.jsx';
 import dashboardApi from '../api/dashboard.api.js';
 import enquiryApi from '../api/enquiry.api.js';
 import lessonPlanApi from '../api/lessonPlan.api.js';
-import alertApi from '../api/alert.api.js';
+import { getAlerts, acknowledgeAlert, sessionDismissedAlerts } from '../api/alert.api.js';
 import { getApiError } from '../services/index.js';
 import { useAppContext } from '../context/AppContext.jsx';
 import EnquiryViewModal from '../components/EnquiryViewModal.jsx';
@@ -33,13 +33,15 @@ const DashboardPage = () => {
       const [statsRes, unifiedRes, alertsRes] = await Promise.all([
         dashboardApi.getDashboardStats(),
         dashboardApi.getUnifiedRecords(),
-        alertApi.getAlerts()
+        getAlerts()
       ]);
       
-      setAlerts(Array.isArray(alertsRes.data) ? alertsRes.data : []);
+      let alertsData = Array.isArray(alertsRes.data) ? alertsRes.data : alertsRes.data?.data;
+      if (!Array.isArray(alertsData)) alertsData = [];
+      setAlerts(alertsData.filter(a => !sessionDismissedAlerts.has(a.id)));
       
       const statsData = statsRes.data;
-      statsData.unreadAlerts = (Array.isArray(alertsRes.data) ? alertsRes.data : []).length;
+      statsData.unreadAlerts = alertsData.filter(a => !sessionDismissedAlerts.has(a.id)).length;
       setStats(statsData);
       
       setRecords((Array.isArray(unifiedRes.data) ? unifiedRes.data : []).filter(r => r.type === 'Lesson Plan'));
@@ -87,8 +89,9 @@ const DashboardPage = () => {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
         await enquiryApi.updateEnquiryStatus(enqId, 'Pending');
+        sessionDismissedAlerts.add(alertId);
       } else {
-        await alertApi.acknowledgeAlert(alertId);
+        await acknowledgeAlert(alertId);
       }
       setAlerts(prev => prev.filter(a => a.id !== alertId));
       setStats(prev => ({ ...prev, unreadAlerts: Math.max(0, prev.unreadAlerts - 1) }));
@@ -104,8 +107,9 @@ const DashboardPage = () => {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
         await enquiryApi.deleteEnquiry(enqId);
+        sessionDismissedAlerts.add(alertId);
       } else {
-        await alertApi.acknowledgeAlert(alertId);
+        await acknowledgeAlert(alertId);
       }
       setAlerts(prev => prev.filter(a => a.id !== alertId));
       setStats(prev => ({ ...prev, unreadAlerts: Math.max(0, prev.unreadAlerts - 1) }));
