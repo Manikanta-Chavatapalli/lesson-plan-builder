@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorAlert from '../components/ErrorAlert.jsx';
 import EmptyState from '../components/EmptyState.jsx';
-import { getAlerts, acknowledgeAlert, sessionDismissedAlerts, hasOpenedAlertsPage, setOpenedAlertsPage } from '../api/alert.api.js';
+import { getAlerts, acknowledgeAlert, sessionDismissedAlerts } from '../api/alert.api.js';
 import { updateEnquiryStatus, deleteEnquiry } from '../api/enquiry.api.js';
 import { getApiError } from '../services/index.js';
 import EnquiryViewModal from '../components/EnquiryViewModal.jsx';
@@ -22,8 +22,7 @@ const AlertsPage = () => {
       const allAlerts = Array.isArray(response.data) ? response.data : [];
       setItems(allAlerts.filter(a => {
         if (sessionDismissedAlerts.has(a.id)) return false;
-        // If it's not a new enquiry and we've already navigated away from the alerts page once this session, hide it
-        if (!a.id.startsWith('alert-new-enq-') && hasOpenedAlertsPage) return false;
+        // The unmount logic was hiding these erroneously on reload due to React Strict Mode
         return true;
       }));
     } catch (err) {
@@ -54,7 +53,6 @@ const AlertsPage = () => {
     return () => {
       mounted = false;
       eventSource.close();
-      setOpenedAlertsPage(true); // Mark that user has visited and left the alerts tab
     };
   }, []);
 
