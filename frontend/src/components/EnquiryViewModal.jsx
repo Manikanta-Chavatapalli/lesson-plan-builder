@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EnquiryViewModal = ({ selectedEnquiry, onClose, onDelete, onAccept }) => {
+const EnquiryViewModal = ({ selectedEnquiry, onClose, onDelete, onAccept, isDeleting }) => {
   if (!selectedEnquiry) return null;
 
   return (
@@ -48,7 +48,9 @@ const EnquiryViewModal = ({ selectedEnquiry, onClose, onDelete, onAccept }) => {
             <button className="btn btn--primary" onClick={onAccept}>Accept Enquiry</button>
           )}
           {onDelete && (
-            <button className="btn btn--danger" onClick={onDelete}>Delete Enquiry</button>
+            <button className="btn btn--danger" onClick={onDelete} disabled={isDeleting}>
+              {isDeleting ? 'Deleting...' : 'Delete Enquiry'}
+            </button>
           )}
         </div>
       </div>

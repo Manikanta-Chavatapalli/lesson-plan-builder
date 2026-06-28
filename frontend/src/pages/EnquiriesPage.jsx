@@ -15,6 +15,7 @@ const EnquiriesPage = () => {
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('Pending'); // Default to Pending (Not Responded)
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
+  const [deletingIds, setDeletingIds] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -31,15 +32,21 @@ const EnquiriesPage = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this enquiry?')) return;
+    setDeletingIds(prev => [...prev, id]);
     try {
       console.log('Attempting to delete:', id);
       await deleteEnquiry(id);
       console.log('Successfully deleted:', id);
       setItems(prev => prev.filter(e => e.id !== id));
+      if (selectedEnquiry && selectedEnquiry.id === id) {
+        setSelectedEnquiry(null);
+      }
     } catch (err) {
       console.error('Delete error:', err);
       alert('Delete failed: ' + getApiError(err).message);
       setError(getApiError(err).message);
+    } finally {
+      setDeletingIds(prev => prev.filter(deleteId => deleteId !== id));
     }
   };
 
@@ -103,6 +110,7 @@ const EnquiriesPage = () => {
                 item={item}
                 onDelete={handleDelete}
                 onView={setSelectedEnquiry}
+                isDeleting={deletingIds.includes(item.id)}
               />
             );
           })}
@@ -115,9 +123,11 @@ const EnquiriesPage = () => {
         onDelete={() => {
           if (selectedEnquiry) {
             handleDelete(selectedEnquiry.id);
-            setSelectedEnquiry(null);
+            // Don't close immediately so they can see the 'Deleting...' state if needed,
+            // or we can close it. Usually better to let it close on success.
           }
         }}
+        isDeleting={selectedEnquiry ? deletingIds.includes(selectedEnquiry.id) : false}
       />
     </div>
   );

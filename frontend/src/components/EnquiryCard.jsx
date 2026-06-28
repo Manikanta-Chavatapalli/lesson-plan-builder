@@ -5,7 +5,8 @@ const EnquiryCard = ({
   item, 
   onDelete, 
   onView, 
-  customActions
+  customActions,
+  isDeleting
 }) => {
   const statusStr = item.status || 'pending';
   const statusLower = statusStr.toLowerCase();
@@ -58,8 +59,9 @@ const EnquiryCard = ({
                 <button 
                   className="btn btn--ghost btn--sm enquiry-card-status-danger" 
                   onClick={() => onDelete(item.id)}
+                  disabled={isDeleting}
                 >
-                  Delete
+                  {isDeleting ? 'Deleting...' : 'Delete'}
                 </button>
               )}
               {onView && (

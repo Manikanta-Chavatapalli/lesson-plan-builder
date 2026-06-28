@@ -21,6 +21,7 @@ const DashboardPage = () => {
   const [records, setRecords] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [selectedAlert, setSelectedAlert] = useState(null);
+  const [deletingIds, setDeletingIds] = useState([]);
 
   // Filters
   const [filterStatus, setFilterStatus] = useState('All');
@@ -98,6 +99,7 @@ const DashboardPage = () => {
 
   const handleDeleteAlert = async (alertId) => {
     if (!window.confirm('Are you sure you want to completely delete this enquiry/alert?')) return;
+    setDeletingIds(prev => [...prev, alertId]);
     try {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
@@ -107,8 +109,13 @@ const DashboardPage = () => {
       }
       setAlerts(prev => prev.filter(a => a.id !== alertId));
       setStats(prev => ({ ...prev, unreadAlerts: Math.max(0, prev.unreadAlerts - 1) }));
+      if (selectedAlert && selectedAlert.id === alertId) {
+        setSelectedAlert(null);
+      }
     } catch (err) {
       setError(getApiError(err).message);
+    } finally {
+      setDeletingIds(prev => prev.filter(deleteId => deleteId !== alertId));
     }
   };
 
@@ -382,8 +389,8 @@ const DashboardPage = () => {
         } : null}
         onDelete={selectedAlert ? () => {
           handleDeleteAlert(selectedAlert.id);
-          setSelectedAlert(null);
         } : null}
+        isDeleting={selectedAlert ? deletingIds.includes(selectedAlert.id) : false}
       />
     </div>
   );

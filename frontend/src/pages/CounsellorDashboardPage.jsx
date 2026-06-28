@@ -36,6 +36,7 @@ const CounsellorDashboardPage = () => {
   const [selectedViewEnquiry, setSelectedViewEnquiry] = useState(null);
   const [responseModal, setResponseModal] = useState({ open: false, enquiry: null, message: '' });
   const [isSubmittingResponse, setIsSubmittingResponse] = useState(false);
+  const [deletingIds, setDeletingIds] = useState([]);
 
   const fetchData = async (showLoading = true) => {
     if (showLoading) setLoading(true);
@@ -84,7 +85,7 @@ const CounsellorDashboardPage = () => {
     return () => window.removeEventListener('new-alert-received', handleNewAlert);
   }, [selectedTeacher]);
 
-  const handleTeacherClick = async (teacher, showLoading = true) => {
+  const handleTeacherClick = async (teacher, showLoading = true, autoSwitchTab = true) => {
     if (showLoading) setLoading(true);
     try {
       const res = await apiClient.get(`/counsellor/teacher-enquiries/${teacher.email}`);
@@ -92,12 +93,14 @@ const CounsellorDashboardPage = () => {
       setTeacherEnquiries(teacherData);
       setSelectedTeacher(teacher);
 
-      // Auto switch tab based on data
-      const hasNew = teacherData.some(e => e.status?.toLowerCase() === 'new');
-      if (hasNew) {
-        setTeacherSubTab('alerts');
-      } else {
-        setTeacherSubTab('not-responded');
+      if (autoSwitchTab) {
+        // Auto switch tab based on data
+        const hasNew = teacherData.some(e => e.status?.toLowerCase() === 'new');
+        if (hasNew) {
+          setTeacherSubTab('alerts');
+        } else {
+          setTeacherSubTab('not-responded');
+        }
       }
     } catch (err) {
       setError(`Failed to load enquiries for ${teacher.name}`);
@@ -146,9 +149,9 @@ const CounsellorDashboardPage = () => {
       setResponseModal({ open: false, enquiry: null, message: '' });
       setResponseError('');
 
-      // Refresh current view
+      // Refresh
       if (selectedTeacher) {
-        handleTeacherClick(selectedTeacher, false);
+        handleTeacherClick(selectedTeacher, false, false);
       }
       fetchData(false);
     } catch (err) {
@@ -160,22 +163,25 @@ const CounsellorDashboardPage = () => {
 
   const handleDeleteEnquiry = async (id) => {
     if (!window.confirm('Are you sure you want to delete this enquiry?')) return;
+    setDeletingIds(prev => [...prev, id]);
     try {
       await apiClient.delete(`/enquiries/${id}`);
       fetchData(false);
       if (selectedTeacher) {
-        handleTeacherClick(selectedTeacher, false);
+        handleTeacherClick(selectedTeacher, false, false);
       }
       setSelectedViewEnquiry(null);
     } catch (err) {
       setError('Failed to delete enquiry.');
+    } finally {
+      setDeletingIds(prev => prev.filter(deleteId => deleteId !== id));
     }
   };
 
   const handleAcceptTeacherAlert = async (id) => {
     try {
       await apiClient.patch(`/enquiries/${id}/status`, { status: 'pending' });
-      if (selectedTeacher) handleTeacherClick(selectedTeacher, false);
+      if (selectedTeacher) handleTeacherClick(selectedTeacher, false, false);
       fetchData(false); // refresh stats silently
     } catch (err) {
       setError('Failed to accept alert.');
@@ -257,7 +263,13 @@ const CounsellorDashboardPage = () => {
                       <button className="btn btn--primary btn--sm" onClick={() => setResponseModal({ open: true, enquiry: enq, message: '' })}>Respond</button>
                     )}
                     {enq.status?.toLowerCase() === 'responded' && (
-                      <button className="btn btn--danger btn--sm" onClick={() => handleDeleteEnquiry(enq.id)}>Delete</button>
+                      <button 
+                        className="btn btn--danger btn--sm" 
+                        onClick={() => handleDeleteEnquiry(enq.id)}
+                        disabled={deletingIds.includes(enq.id)}
+                      >
+                        {deletingIds.includes(enq.id) ? 'Deleting...' : 'Delete'}
+                      </button>
                     )}
                   </div>
                 }
@@ -336,7 +348,13 @@ const CounsellorDashboardPage = () => {
                             <button className="btn btn--primary btn--sm" onClick={() => setResponseModal({ open: true, enquiry: enq, message: '' })}>Respond</button>
                           )}
                           {enq.status?.toLowerCase() === 'responded' && (
-                            <button className="btn btn--danger btn--sm" onClick={() => handleDeleteEnquiry(enq.id)}>Delete</button>
+                            <button 
+                              className="btn btn--danger btn--sm" 
+                              onClick={() => handleDeleteEnquiry(enq.id)}
+                              disabled={deletingIds.includes(enq.id)}
+                            >
+                              {deletingIds.includes(enq.id) ? 'Deleting...' : 'Delete'}
+                            </button>
                           )}
                         </div>
                       }

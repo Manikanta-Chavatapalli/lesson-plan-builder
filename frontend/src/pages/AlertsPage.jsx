@@ -14,6 +14,7 @@ const AlertsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedAlert, setSelectedAlert] = useState(null);
+  const [deletingIds, setDeletingIds] = useState([]);
 
   const loadAlerts = async () => {
     try {
@@ -66,6 +67,7 @@ const AlertsPage = () => {
 
   const handleDeleteAlert = async (alertId) => {
     if (!window.confirm('Are you sure you want to completely delete this enquiry/alert?')) return;
+    setDeletingIds(prev => [...prev, alertId]);
     try {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
@@ -74,8 +76,13 @@ const AlertsPage = () => {
         await acknowledgeAlert(alertId);
       }
       setItems(prev => prev.filter(a => a.id !== alertId));
+      if (selectedAlert && selectedAlert.id === alertId) {
+        setSelectedAlert(null);
+      }
     } catch (err) {
       setError(getApiError(err).message);
+    } finally {
+      setDeletingIds(prev => prev.filter(deleteId => deleteId !== alertId));
     }
   };
 
@@ -144,8 +151,8 @@ const AlertsPage = () => {
         } : null}
         onDelete={selectedAlert ? () => {
           handleDeleteAlert(selectedAlert.id);
-          setSelectedAlert(null);
         } : null}
+        isDeleting={selectedAlert ? deletingIds.includes(selectedAlert.id) : false}
       />
     </div>
   );
