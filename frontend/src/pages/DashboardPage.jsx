@@ -6,7 +6,7 @@ import ErrorAlert from '../components/ErrorAlert.jsx';
 import dashboardApi from '../api/dashboard.api.js';
 import enquiryApi from '../api/enquiry.api.js';
 import lessonPlanApi from '../api/lessonPlan.api.js';
-import { getAlerts, acknowledgeAlert, sessionDismissedAlerts } from '../api/alert.api.js';
+import { getAlerts, acknowledgeAlert, sessionDismissedAlerts, hasOpenedAlertsPage, setOpenedAlertsPage } from '../api/alert.api.js';
 import { getApiError } from '../services/index.js';
 import { useAppContext } from '../context/AppContext.jsx';
 import EnquiryViewModal from '../components/EnquiryViewModal.jsx';
@@ -38,10 +38,15 @@ const DashboardPage = () => {
       
       let alertsData = Array.isArray(alertsRes.data) ? alertsRes.data : alertsRes.data?.data;
       if (!Array.isArray(alertsData)) alertsData = [];
-      setAlerts(alertsData.filter(a => !sessionDismissedAlerts.has(a.id)));
+      const visibleAlerts = alertsData.filter(a => {
+        if (sessionDismissedAlerts.has(a.id)) return false;
+        if (!a.id.startsWith('alert-new-enq-') && hasOpenedAlertsPage) return false;
+        return true;
+      });
+      setAlerts(visibleAlerts);
       
       const statsData = statsRes.data;
-      statsData.unreadAlerts = alertsData.filter(a => !sessionDismissedAlerts.has(a.id)).length;
+      statsData.unreadAlerts = visibleAlerts.length;
       setStats(statsData);
       
       setRecords((Array.isArray(unifiedRes.data) ? unifiedRes.data : []).filter(r => r.type === 'Lesson Plan'));
@@ -59,7 +64,10 @@ const DashboardPage = () => {
   useEffect(() => {
     const handleNewAlert = () => loadData(false);
     window.addEventListener('new-alert-received', handleNewAlert);
-    return () => window.removeEventListener('new-alert-received', handleNewAlert);
+    return () => {
+      window.removeEventListener('new-alert-received', handleNewAlert);
+      setOpenedAlertsPage(true);
+    };
   }, []);
 
   const handleUpdateStatus = async (id, type, newStatus) => {

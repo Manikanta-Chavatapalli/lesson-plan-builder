@@ -1,6 +1,11 @@
 import apiClient from './axios.js';
 
 export const sessionDismissedAlerts = new Set();
+export let hasOpenedAlertsPage = false;
+
+export const setOpenedAlertsPage = (val) => {
+  hasOpenedAlertsPage = val;
+};
 
 export const getAlerts = async () => {
   const { data } = await apiClient.get(`/alerts?t=${Date.now()}`);
@@ -13,4 +18,4 @@ export const acknowledgeAlert = async (id) => {
   return data;
 };
 
-export default { getAlerts, acknowledgeAlert, sessionDismissedAlerts };
+export default { getAlerts, acknowledgeAlert, sessionDismissedAlerts, hasOpenedAlertsPage, setOpenedAlertsPage };
