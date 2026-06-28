@@ -12,12 +12,12 @@ export const getAlerts = async () => {
   
   // If it's been more than 3 seconds since the first load, we filter out normal lesson plan alerts
   // so they don't reappear when switching tabs, as requested. (Strict Mode safe)
-  let visibleAlerts = data;
+  let visibleAlerts = Array.isArray(data.data) ? data.data : [];
   if (Date.now() - initialLoadTime > 3000) {
-    visibleAlerts = data.filter(a => a.id.startsWith('alert-new-enq-'));
+    visibleAlerts = visibleAlerts.filter(a => a.id.startsWith('alert-new-enq-'));
   }
   
-  return { data: visibleAlerts };
+  return { ...data, data: visibleAlerts };
 };
 
 export const acknowledgeAlert = async (id) => {
