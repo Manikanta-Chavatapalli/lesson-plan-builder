@@ -6,7 +6,7 @@ import ErrorAlert from '../components/ErrorAlert.jsx';
 import dashboardApi from '../api/dashboard.api.js';
 import enquiryApi from '../api/enquiry.api.js';
 import lessonPlanApi from '../api/lessonPlan.api.js';
-import { getAlerts, acknowledgeAlert, sessionDismissedAlerts } from '../api/alert.api.js';
+import { getAlerts, acknowledgeAlert, sessionDismissedAlerts, hasOpenedAlertsPage, setOpenedAlertsPage, cancelOpenedAlertsPage } from '../api/alert.api.js';
 import { getApiError } from '../services/index.js';
 import { useAppContext } from '../context/AppContext.jsx';
 import EnquiryViewModal from '../components/EnquiryViewModal.jsx';
@@ -40,6 +40,7 @@ const DashboardPage = () => {
       if (!Array.isArray(alertsData)) alertsData = [];
       const visibleAlerts = alertsData.filter(a => {
         if (sessionDismissedAlerts.has(a.id)) return false;
+        if (!a.id.startsWith('alert-new-enq-') && hasOpenedAlertsPage) return false;
         return true;
       });
       setAlerts(visibleAlerts);
@@ -61,10 +62,12 @@ const DashboardPage = () => {
   }, []);
 
   useEffect(() => {
+    cancelOpenedAlertsPage(); // Strict mode safe
     const handleNewAlert = () => loadData(false);
     window.addEventListener('new-alert-received', handleNewAlert);
     return () => {
       window.removeEventListener('new-alert-received', handleNewAlert);
+      setOpenedAlertsPage(true);
     };
   }, []);
 

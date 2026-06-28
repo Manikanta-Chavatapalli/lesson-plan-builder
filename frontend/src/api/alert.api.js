@@ -1,22 +1,24 @@
 import apiClient from './axios.js';
 
 export const sessionDismissedAlerts = new Set();
-let initialLoadTime = null;
+export let hasOpenedAlertsPage = false;
+let unmountTimer = null;
+
+export const setOpenedAlertsPage = (val) => {
+  unmountTimer = setTimeout(() => {
+    hasOpenedAlertsPage = val;
+  }, 200);
+};
+
+export const cancelOpenedAlertsPage = () => {
+  if (unmountTimer) {
+    clearTimeout(unmountTimer);
+  }
+};
 
 export const getAlerts = async () => {
   const { data } = await apiClient.get(`/alerts?t=${Date.now()}`);
-  
-  if (initialLoadTime === null) {
-    initialLoadTime = Date.now();
-  }
-  
-  // If it's been more than 3 seconds since the first load, we filter out normal lesson plan alerts
-  // so they don't reappear when switching tabs, as requested. (Strict Mode safe)
   let visibleAlerts = Array.isArray(data.data) ? data.data : [];
-  if (Date.now() - initialLoadTime > 3000) {
-    visibleAlerts = visibleAlerts.filter(a => a.id.startsWith('alert-new-enq-'));
-  }
-  
   return { ...data, data: visibleAlerts };
 };
 
@@ -26,4 +28,4 @@ export const acknowledgeAlert = async (id) => {
   return data;
 };
 
-export default { getAlerts, acknowledgeAlert, sessionDismissedAlerts };
+export default { getAlerts, acknowledgeAlert, sessionDismissedAlerts, hasOpenedAlertsPage, setOpenedAlertsPage, cancelOpenedAlertsPage };

@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import ErrorAlert from '../components/ErrorAlert.jsx';
 import EmptyState from '../components/EmptyState.jsx';
-import { getAlerts, acknowledgeAlert, sessionDismissedAlerts } from '../api/alert.api.js';
+import { getAlerts, acknowledgeAlert, sessionDismissedAlerts, hasOpenedAlertsPage, setOpenedAlertsPage, cancelOpenedAlertsPage } from '../api/alert.api.js';
 import { updateEnquiryStatus, deleteEnquiry } from '../api/enquiry.api.js';
 import { getApiError } from '../services/index.js';
 import EnquiryViewModal from '../components/EnquiryViewModal.jsx';
@@ -22,7 +22,8 @@ const AlertsPage = () => {
       const allAlerts = Array.isArray(response.data) ? response.data : [];
       setItems(allAlerts.filter(a => {
         if (sessionDismissedAlerts.has(a.id)) return false;
-        // The unmount logic was hiding these erroneously on reload due to React Strict Mode
+        // If it's not a new enquiry and we've already navigated away from the alerts page once this session, hide it
+        if (!a.id.startsWith('alert-new-enq-') && hasOpenedAlertsPage) return false;
         return true;
       }));
     } catch (err) {
@@ -34,6 +35,7 @@ const AlertsPage = () => {
 
   useEffect(() => {
     let mounted = true;
+    cancelOpenedAlertsPage(); // In strict mode remount, this cancels the unmount timer
     loadAlerts();
     
     // Listen for Server-Sent Events to update instantly instead of polling every 10 seconds
@@ -53,6 +55,7 @@ const AlertsPage = () => {
     return () => {
       mounted = false;
       eventSource.close();
+      setOpenedAlertsPage(true); // Mark that user has visited and left the alerts tab
     };
   }, []);
 
