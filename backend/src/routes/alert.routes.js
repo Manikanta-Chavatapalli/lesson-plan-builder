@@ -104,7 +104,7 @@ class AlertService {
         }
       }
     });
-    return alerts.filter(a => !acknowledgedAlerts[a.id]);
+    return alerts; // removed filter so alerts come back on reload
   }
 
   async acknowledge(id) {
