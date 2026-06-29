@@ -49,7 +49,8 @@ const deleteLessonPlanController = asyncHandler(async (req, res) => {
   return successResponse(res, null, API_MESSAGES.LESSON_PLAN_DELETED);
 });
 
-router.post('/generate', createLessonPlanValidation, validate, generateLessonPlanController);
+// student written: remove validation here because generation needs different inputs than saving (like no weekNumber needed yet)
+router.post('/generate', generateLessonPlanController);
 router.get('/', getAllLessonPlansController);
 router.post('/', createLessonPlanValidation, validate, createLessonPlanController);
 router.get('/:id', getLessonPlanByIdController);
