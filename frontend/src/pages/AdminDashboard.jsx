@@ -9,6 +9,8 @@ const AdminDashboard = () => {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('teacher');
   const [name, setName] = useState('');
+  // student written: adding a state to stop multiple clicks
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetchUsers = async () => {
     try {
@@ -27,6 +29,7 @@ const AdminDashboard = () => {
 
   const handleAddUser = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); // student written: make button unclickable when it starts
     try {
       await apiClient.post('/users', { email, role, name });
       setEmail('');
@@ -35,6 +38,8 @@ const AdminDashboard = () => {
       fetchUsers();
     } catch (error) {
       alert("Failed to add user: " + (error.response?.data?.message || error.message));
+    } finally {
+      setIsSubmitting(false); // student written: make button clickable again when done
     }
   };
 
@@ -86,8 +91,8 @@ const AdminDashboard = () => {
             </select>
           </div>
           <div className="admin-form-actions">
-            <button type="submit" className="btn btn--primary admin-form-btn">
-              Add User
+            <button type="submit" className="btn btn--primary admin-form-btn" disabled={isSubmitting}>
+              {isSubmitting ? "Adding User..." : "Add User"}
             </button>
           </div>
         </form>
