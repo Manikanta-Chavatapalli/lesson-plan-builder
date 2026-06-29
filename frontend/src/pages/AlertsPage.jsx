@@ -15,6 +15,8 @@ const AlertsPage = () => {
   const [error, setError] = useState('');
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [deletingIds, setDeletingIds] = useState([]);
+  // student written: keep track of which alerts are being accepted right now
+  const [processingIds, setProcessingIds] = useState([]);
 
   const loadAlerts = async () => {
     try {
@@ -60,6 +62,8 @@ const AlertsPage = () => {
   }, []);
 
   const handleAcceptAlert = async (alertId) => {
+    // student written: block double clicks by adding id to processing list
+    setProcessingIds(prev => [...prev, alertId]);
     try {
       if (alertId.startsWith('alert-new-enq-')) {
         const enqId = alertId.replace('alert-new-enq-', '');
@@ -71,6 +75,9 @@ const AlertsPage = () => {
       setItems(prev => prev.filter(a => a.id !== alertId));
     } catch (err) {
       setError(getApiError(err).message);
+    } finally {
+      // student written: remove id from processing list when done
+      setProcessingIds(prev => prev.filter(id => id !== alertId));
     }
   };
 
@@ -134,6 +141,7 @@ const AlertsPage = () => {
                   <div className="alert-card-actions">
                     <button 
                       className="btn btn--primary" 
+                      disabled={processingIds.includes(item.id)} // student written: make unclickable while processing
                       onClick={() => {
                         if (item.id.startsWith('alert-new-enq-')) {
                           setSelectedAlert(item);
@@ -142,7 +150,7 @@ const AlertsPage = () => {
                         }
                       }}
                     >
-                      {item.id.startsWith('alert-new-enq-') ? 'View' : 'Dismiss'}
+                      {processingIds.includes(item.id) ? 'Processing...' : (item.id.startsWith('alert-new-enq-') ? 'View' : 'Dismiss')}
                     </button>
                   </div>
                 )}
