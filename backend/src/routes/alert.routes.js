@@ -69,7 +69,8 @@ class AlertService {
           enquiryMessage: record.message
         });
       }
-      if (record.status?.toLowerCase() !== 'completed' && record.status?.toLowerCase() !== 'responded') {
+      // student written: stop showing status alerts for enquiries because "new enquiry" alert is enough
+      if (record.type === 'lessonPlan' && record.status?.toLowerCase() !== 'completed' && record.status?.toLowerCase() !== 'responded') {
         alerts.push({
           id: `alert-status-${record.id}`,
           recordId: record.id,
