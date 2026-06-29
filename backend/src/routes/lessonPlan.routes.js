@@ -15,12 +15,12 @@ import authenticate from '../middlewares/auth.middleware.js';
 const router = Router();
 
 const getAllLessonPlansController = asyncHandler(async (req, res) => {
-  const plans = await lessonPlanModel.getAllLessonPlans({ userId: req.user?.id });
+  const plans = await lessonPlanModel.getAllLessonPlans({ userId: req.workspaceUserId });
   return successResponse(res, plans, API_MESSAGES.LESSON_PLANS_FETCHED);
 });
 
 const createLessonPlanController = asyncHandler(async (req, res) => {
-  const plan = await lessonPlanModel.createLessonPlan({ ...req.body, userId: req.user?.id });
+  const plan = await lessonPlanModel.createLessonPlan({ ...req.body, userId: req.workspaceUserId });
   return createdResponse(res, plan, API_MESSAGES.LESSON_PLAN_CREATED);
 });
 

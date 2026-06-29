@@ -56,7 +56,7 @@ const createUserController = asyncHandler(async (req, res) => {
   // Run log creation asynchronously to avoid delaying the response
   activityLogService.create({
     recordId: newUser.id,
-    userId: req.user.id,
+    userId: req.workspaceUserId,
     type: 'user',
     action: 'Created',
     message: `Created new user ${name || 'Unknown'} (${email}) with role ${role}`
@@ -76,7 +76,7 @@ const deleteUserController = asyncHandler(async (req, res) => {
     // Run log creation asynchronously
     activityLogService.create({
       recordId: id,
-      userId: req.user.id,
+      userId: req.workspaceUserId,
       type: 'user',
       action: 'Deleted',
       message: `Deleted user ${userToDelete.name || 'Unknown'} (${userToDelete.email}) with role ${userToDelete.role}`

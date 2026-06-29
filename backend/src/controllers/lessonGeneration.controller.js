@@ -964,7 +964,7 @@ class LessonGenerationService {
 const lessonGenerationService = new LessonGenerationService();
 
 export const generateLessonPlanController = asyncHandler(async (req, res) => {
-  const data = await lessonGenerationService.generateLessonPlan(req.body);
+  const data = await lessonGenerationService.generateLessonPlan({ ...req.body, userId: req.workspaceUserId });
   return successResponse(res, data, API_MESSAGES.LESSON_GENERATED);
 });
 

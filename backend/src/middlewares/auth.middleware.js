@@ -25,6 +25,7 @@ export const authenticate = async (req, _res, next) => {
     }
 
     req.user = user;
+    req.workspaceUserId = `${user.id}_${user.role}`;
     next();
   } catch (error) {
     if (error.code?.startsWith('auth/')) {

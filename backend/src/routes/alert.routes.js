@@ -133,7 +133,7 @@ class AlertService {
 export const alertService = new AlertService();
 
 const findAll = asyncHandler(async (req, res) => {
-  const filters = { ...req.query, userId: req.user.id, teacherEmail: req.user.email };
+  const filters = { ...req.query, userId: req.workspaceUserId, teacherEmail: req.user.email };
   const data = await alertService.findAll(filters);
   return successResponse(res, data, API_MESSAGES.ALERTS_FETCHED);
 });

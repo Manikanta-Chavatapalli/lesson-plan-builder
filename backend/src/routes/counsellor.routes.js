@@ -149,12 +149,12 @@ const getCounsellorAlerts = asyncHandler(async (req, res) => {
 });
 
 const acceptAlert = asyncHandler(async (req, res) => {
-  const data = await counsellorService.acceptAlert(req.params.id, req.user.id);
+  const data = await counsellorService.acceptAlert(req.params.id, req.workspaceUserId);
   return successResponse(res, data, 'Alert accepted successfully');
 });
 
 const deleteAlert = asyncHandler(async (req, res) => {
-  const data = await counsellorService.deleteAlert(req.params.id, req.user.id);
+  const data = await counsellorService.deleteAlert(req.params.id, req.workspaceUserId);
   return successResponse(res, data, 'Alert deleted successfully');
 });
 
@@ -169,7 +169,7 @@ const respondToEnquiry = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Response message is required');
   }
-  const data = await counsellorService.respondToEnquiry(req.params.id, responseMessage, req.user.id, req.user.name);
+  const data = await counsellorService.respondToEnquiry(req.params.id, responseMessage, req.workspaceUserId, req.user.name);
   sseService.broadcast({ type: 'NEW_ALERT' });
   return successResponse(res, data, 'Responded successfully');
 });

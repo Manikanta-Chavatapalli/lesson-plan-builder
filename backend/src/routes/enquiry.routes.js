@@ -219,7 +219,7 @@ const updateStatus = asyncHandler(async (req, res) => {
   }
 
   const respondedBy = req.user.role === 'counsellor' ? 'counsellor' : (req.user.role === 'teacher' ? 'teacher' : null);
-  const data = await enquiryService.updateStatus(req.params.id, status ? status.toLowerCase() : status, responseMessage, req.user.id, respondedBy);
+  const data = await enquiryService.updateStatus(req.params.id, status ? status.toLowerCase() : status, responseMessage, req.workspaceUserId, respondedBy);
 
   alertService.acknowledgeByActionLink(`/enquiries/${req.params.id}/verify`);
 
@@ -260,7 +260,7 @@ const rejectEnquiry = asyncHandler(async (req, res) => {
 
 const updatePriority = asyncHandler(async (req, res) => {
   const { priority } = req.body;
-  const data = await enquiryService.updatePriority(req.params.id, priority, req.user.id);
+  const data = await enquiryService.updatePriority(req.params.id, priority, req.workspaceUserId);
   return successResponse(res, data, 'Priority updated successfully');
 });
 

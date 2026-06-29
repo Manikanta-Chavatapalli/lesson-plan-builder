@@ -45,12 +45,12 @@ class ActivityLogService {
 export const activityLogService = new ActivityLogService();
 
 const getAllActivity = asyncHandler(async (req, res) => {
-  const data = await activityLogService.getAll(req.user.id);
+  const data = await activityLogService.getAll(req.workspaceUserId);
   return successResponse(res, data, 'Activity fetched successfully');
 });
 
 const getRecentActivity = asyncHandler(async (req, res) => {
-  const data = await activityLogService.getRecentActivity(10, req.user.id);
+  const data = await activityLogService.getRecentActivity(10, req.workspaceUserId);
   return successResponse(res, data, 'Recent activity fetched successfully');
 });
 

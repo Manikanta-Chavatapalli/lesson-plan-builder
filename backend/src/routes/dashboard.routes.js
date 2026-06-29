@@ -74,19 +74,19 @@ class DashboardService {
 export const dashboardService = new DashboardService();
 
 const getStats = asyncHandler(async (req, res) => {
-  const filters = { ...req.query, userId: req.user.id, teacherEmail: req.user.email };
+  const filters = { ...req.query, userId: req.workspaceUserId, teacherEmail: req.user.email };
   const data = await dashboardService.getStats(filters);
   return successResponse(res, data, API_MESSAGES.DASHBOARD_STATS_FETCHED);
 });
 
 const getRecentPlans = asyncHandler(async (req, res) => {
-  const filters = { ...req.query, userId: req.user.id };
+  const filters = { ...req.query, userId: req.workspaceUserId };
   const data = await dashboardService.getRecentPlans(filters);
   return successResponse(res, data, API_MESSAGES.RECENT_PLANS_FETCHED);
 });
 
 const getUnifiedRecords = asyncHandler(async (req, res) => {
-  const filters = { ...req.query, userId: req.user.id, teacherEmail: req.user.email };
+  const filters = { ...req.query, userId: req.workspaceUserId, teacherEmail: req.user.email };
   const data = await dashboardService.getUnifiedRecords(filters);
   return successResponse(res, data, 'Unified records fetched successfully');
 });
